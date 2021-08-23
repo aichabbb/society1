@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="add_production_table_in_sale_order" model="ir.ui.view">
+            <field name="name">sale.orde.production.table.add</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_information']" position="before">
+                    <page autofocus="autofocus" string="Productions" invisible="not context.get('is_accessed_from_production')">
+                        <field name="production_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="names"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="place_into_bar" inherit_id="website.snippets" name="Place into bar">
+        <xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+            <t t-snippet="theme_gammaradtech_website.snippet_banner"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_small_banner"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_about"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_clients"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_features"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_generic_text"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_work_left"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_work_right"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_testimonial"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_contact"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+
+            <t t-snippet="theme_gammaradtech_website.snippet_footer"
+               t-thumbnail="/theme_gammaradtech_website/static/images/ui/banner_snippet_thumb.png"/>
+        </xpath>
+    </template>
+
+</odoo>

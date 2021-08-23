@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="motif_refus" model="ir.ui.view">
+            <field name="name">motif.refus.wizard</field>
+            <field name="model">motifs.refus.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Motif de refus">
+                    <group class="oe_title">
+                        <field name="motif"/>
+                    </group>
+                    <footer>
+                        <button name="action_refus_reason_apply" string="Submit" type="object" class="btn btn-sm btn-primary"/>
+                        <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="motif_refus_action" model="ir.actions.act_window">
+            <field name="name">Motif de refus</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">motifs.refus.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="motif_refus"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

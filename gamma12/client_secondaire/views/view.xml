@@ -1,0 +1,52 @@
+<odoo>
+
+  <!-- Inherit Form View to Modify it -->
+  <record id="client_secondaire_inherit" model="ir.ui.view">
+      <field name="name">client.secondaire.sale.order</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='partner_id']" position="after">
+              <field name="client_sec"/>
+          </xpath>
+
+      </field>
+  </record>
+
+    <record id="client_secondaire_form" model="ir.ui.view">
+        <field name="name">client.secondaire</field>
+        <field name="model">client.secondaire</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="devis" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="client_secondaire_action" model="ir.actions.act_window">
+        <field name="name">Client secondaire</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.secondaire</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            <!-- Add Text Here -->
+          </p><p>
+            <!-- More details about what a user can do with this object will be OK -->
+          </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="client_secondaire_menu" name="Client secondaire" parent="sale.sale_order_menu" groups="sales_team.group_sale_salesman" sequence="99"  action="client_secondaire_action"/>
+
+
+
+
+</odoo>

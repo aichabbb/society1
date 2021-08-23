@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="external_layout_gamma">
+            <div class="header o_gamma_header" id="header_id">
+                <div class="row">
+                        <table class="col-3">
+                            <tr>
+                                <td>
+                                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+                                </td>
+                                <td>
+                                    <img class="logo_iso" src="/en-tete_gamma/static/image/9001.png"/>
+                                    <img class="logo_urs" src="/en-tete_gamma/static/image/URS.png"/>
+                                </td>
+                                <td id="td_2">
+                                </td>
+                                <td>
+                                    <div class="offset-1">
+                                        CONSEIL,ASSISTANCE ET TRAVAUX DE RADIOPROTECTION
+                                        <!-- <ul class="list-unstyled"> -->
+                                            <!-- <strong>
+                                                <li t-if="company.name">
+                                                    <span t-field="company.name"/>
+                                                </li>
+                                            </strong> -->
+                                            <!-- <li t-if="company.vat"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>:
+                                                <span t-field="company.vat"/>
+                                            </li>
+                                            <li t-if="company.phone">Tel:
+                                                <span t-field="company.phone"/>
+                                            </li>
+                                            <li t-if="company.email">
+                                                <span t-field="company.email"/>
+                                            </li>
+                                            <li t-if="company.website">
+                                                <span t-field="company.website"/>
+                                            </li>
+                                        </ul> -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+            <div class="article o_report_layout_gamma"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer o_gamma_footer">
+                 <div class="pied_de_page">
+                       <p style="padding: 5px 10px;"><span t-esc="company.name"/>
+                          Adr: <span t-esc="company.street"/>
+                        <span t-esc="company.street2"/>
+                        <span t-esc="company.city"/>
+                        <span t-esc="company.city"/>
+                        <span t-esc="company.state_id.name"/>
+                        <span t-esc="company.zip"/>
+                        <span t-esc="company.country_id.name"/>
+                          <span t-if="company.phone">Tél :</span>
+                        <span t-esc="company.phone"/>
+                           <span t-if="company.email">Email :</span>
+                        <span t-esc="company.email"/>
+                         <span t-if="company.website" style="font-weight: bold;">Web :</span><span t-esc="company.website"/> <br/>
+                        <span t-if="company.rc_societe" style="font-weight: bold;">R.C:</span> <span t-esc="company.rc_societe"/>
+                          <span t-if="company.Capital" style="font-weight: bold;">Capital : <span t-esc="company.Capital"/>DH</span>
+                          <span t-if="company.patente_societe" style="font-weight: bold;">Pat : <span t-esc="company.patente_societe"/></span>
+                          <span t-if="company.if_societe" style="font-weight: bold;">I.F. :</span> <span t-esc="company.if_societe"/>
+                           <span t-if="company.cnss_societe" style="font-weight: bold;">CNSS :</span> <span t-esc="company.cnss_societe"/>
+                           <span t-if="company.Banque_populaire" style="font-weight: bold;">Banque Populaire :</span> <span t-esc="company.Banque Populaire"/>
+                    </p>
+                </div>
+            </div>
+
+        </template>
+
+    </data>
+</odoo>

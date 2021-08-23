@@ -1,0 +1,153 @@
+<odoo>
+    <data>
+        <record id='fleet_vehicle_jawaz_view_form' model='ir.ui.view'>
+            <field name="name">fleet.vehicle.jawaz.form</field>
+            <field name="model">fleet.vehicle.jawaz</field>
+            <field name="arch" type="xml">
+                <form string="jawaz Logs">
+                    <sheet>
+                        <group>
+                            <group string="Détail du véhicule">
+                                <field name="vehicle_id"/>
+                            </group>
+                            <group string="Détails">
+                                <field name="amount"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Détail kilométrique">
+                                <label for="odometer"/>
+                                <div class="o_row">
+                                    <field name="odometer"/>
+                                    <field name="odometer_unit"/>
+                                </div>
+                            </group>
+                            <group string="Informations supplémentaires">
+                                <field name="date"/>
+                                <field name="purchaser_id"/>
+                                <field name="inv_ref"/>
+                                <field name="vendor_id" context="{'default_supplier': True}"/>
+                            </group>
+                        </group>
+                        <field name="notes" placeholder="Ecrivez ici toute information"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id='fleet_vehicle_jawaz_view_tree' model='ir.ui.view'>
+            <field name="name">fleet.vehicle.jawaz.tree</field>
+            <field name="model">fleet.vehicle.jawaz</field>
+            <field name="arch" type="xml">
+                <tree string="jawaz Logs">
+                    <field name="date"/>
+                    <field name="vehicle_id"/>
+                    <field name="purchaser_id"/>
+                    <field name="inv_ref" invisible="1"/>
+                    <field name="vendor_id" invisible="1"/>
+                    <field name="odometer"/>
+                    <field name="odometer_unit"/>
+                    <field name="amount" sum="Price"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='fleet_vehicle_jawaz_view_kanban' model='ir.ui.view'>
+            <field name="name">fleet.vehicle.jawaz.kanban</field>
+            <field name="model">fleet.vehicle.jawaz</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <strong>
+                                        <field name="vehicle_id"/>
+                                        <span class="float-right"><field name="date"/></span>
+                                    </strong>
+                                </div>
+                                <div>
+                                    <span><field name="purchaser_id"/></span>
+                                </div>
+                                <div>
+                                    <span class="float-right"><field name="amount"/></span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id='fleet_vehicle_jawaz_view_search' model='ir.ui.view'>
+            <field name="name">fleet.vehicle.jawaz.search</field>
+            <field name="model">fleet.vehicle.jawaz</field>
+            <field name="arch" type="xml">
+                <search string="Vehicles jawaz Logs">
+                    <field name="vehicle_id"/>
+                    <field name="date"/>
+                    <field name="purchaser_id"/>
+                    <field name="amount" sum="Price"/>
+                    <group expand="0" string="Group By">
+                        <filter name="groupby_vehicle" context="{'group_by' : 'vehicle_id'}" string="Vehicle"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+       <!-- <record id="fleet_vehicle_jawaz_view_graph" model="ir.ui.view">
+            <field name="name">fleet.vehicle.jawaz.graph</field>
+            <field name="model">fleet.vehicle.jawaz</field>
+            <field name="arch" type="xml">
+                <graph string="Fuel Costs Per Month">
+                    <field name="vehicle_id" type="row"/>
+                    <field name="cost_amount" type="measure"/>
+                </graph>
+            </field>
+        </record>-->
+
+        <record id='ia_jawaz.fleet_vehicle_jawaz_action' model='ir.actions.act_window'>
+            <field name="name">Suivi de jawaz</field>
+            <field name="res_model">fleet.vehicle.jawaz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="context">{"search_default_groupby_vehicle": True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Créez un nouveau enregistrement
+                </p><!--<p>
+            Here you can add refuelling entries for all vehicles.
+          </p>-->
+            </field>
+        </record>
+
+        <menuitem action="ia_jawaz.fleet_vehicle_jawaz_action" parent="fleet.fleet_vehicles"
+                  id="fleet_vehicle_jawaz_menu" groups="fleet.fleet_group_user"/>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="ia_jawaz.inherit_fleet_for_jawaz" model="ir.ui.view">
+            <field name="name">jawaz fleet</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='return_action_to_open']" position="after">
+                    <button name="return_action_to_open_jawaz"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-credit-card"
+                            context="{'xml_id':'fleet_vehicle_jawaz_action'}"
+                            help="Voir la consommation de la carte Jawaz">
+                        <field name="jawaz_count" widget="statinfo" string="Jawaz"/>
+                    </button>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

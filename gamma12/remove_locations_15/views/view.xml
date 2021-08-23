@@ -1,0 +1,83 @@
+<odoo>
+    <data>
+        <!--::::::::urgent main::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+        <record id="urgent_main_tree" model="ir.ui.view">
+            <field name="name">remove.location.tree</field>
+            <field name="model">remove.location</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="but"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="urgent_main_form" model="ir.ui.view">
+            <field name="name">remove.location.form</field>
+            <field name="model">remove.location</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="fix" string="Fix" class="oe_highlight" type="object"/>
+                        <button name="show_stuff" string="Show" class="oe_highlight" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+
+                            <field name="but" attrs="{'invisible':[('remove_all','=',True)]}"/>
+                            <field name="remove_all"/>
+
+                            <field name="date" required="1"/>
+                            <field name="location_dest" required="1"/>
+                            <field name="location_id" required="1"/>
+                            <field name="company_id" invisible="1"/>
+
+
+                        </group>
+
+
+                              <field name="move" widget="one2many_list">
+                            <tree string="moves" editable="bottom">
+                                <field name="product_id"/>
+                                <field name="name" invisible="1"/>
+                                <field name="location_id" required="0"/>
+                                <field name="location_dest_id" required="0"/>
+                                <field name="date"/>
+                                <field name="date_expected"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="product_uom"/>
+                                <field name="product_uom_qty" string="Qauntité par article"/>
+                                <field name="reserved_availability" invisible="1"/>
+                                <field name="quantity_done"/>
+                                <field name="state" invisible="1"/>
+                            </tree>
+                          </field>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="main_urgent_action" model="ir.actions.act_window">
+            <field name="name">Remover</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">remove.location</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_type">form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="urgent_main" name="Remover"
+                  action="main_urgent_action" sequence=""/>
+
+
+    </data>
+</odoo>

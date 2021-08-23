@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+            id="report_paie_maroc_new"
+            string="Feuille de paie"
+            model="hr.payslip"
+            report_type="qweb-pdf"
+            name="paie_maroc.fiche_de_paie_new"
+            file="paie_maroc.fiche_de_paie_new"
+            print_report_name="'bulletin de paie N° %s' % (object.number)"
+    />
+    <template id="fiche_de_paie_new">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="top:10%">
+                        <center>
+                            <div style="font-size:1em;text-align: center;">
+                                <table width="100%" style="border: 1px solid black;height:2px;text-align: center;">
+
+                                    <td width="40%" height="10%" rowspan="3" style="border: 1px solid black;">
+                                        <center>BULLETIN DE PAIE</center>
+                                        <span t-field="o.number"/>
+                                    </td>
+                                    <td width="25%" style="border: 1px solid black;">N°ploice Ass</td>
+                                    <td width="25%" style="border: 1px solid black;">Période de paie</td>
+                                    <tr>
+                                        <td width="33%" style="border: 1px solid black;"></td>
+                                        <td width="33%" style="border: 1px solid black;">
+                                            <span t-field="o.date_from"/>
+                                            <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                            <t t-esc="foo"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                    </tr>
+                                    <tr width="30%" rowspan="2">
+                                        <td width="33%" style="border: 1px solid black;">Société</td>
+                                        <td width="33%" style="border: 1px solid black;">Adresse</td>
+                                        <td width="33%" style="border: 1px solid black;">N°aff c.n.s.s</td>
+
+
+                                    </tr>
+                                    <tr width="30%" rowspan="2">
+                                        <td width="33%" style="border: 1px solid black;">
+                                            <span t-field="o.company_id.name"/>
+                                        </td>
+                                        <td width="33%" style="border: 1px solid black;">
+                                            <span t-field="o.employee_id.address_nv"/>
+                                        </td>
+                                        <td width="33%" style="border: 1px solid black;">
+                                            <span t-field="o.company_id.cnss_societe"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </center>
+                        <!--                        <br>-->
+                        <center>
+                            <table width="100%" style="border: 1px solid black;height:2px;text-align: center;">
+                                <tr style="text-align: center;">
+                                    <td width="15%" style="border: 1px solid black;">N°matricule</td>
+                                    <td width="10%" style="border: 1px solid black;">Dép</td>
+                                    <td width="35%" style="border: 1px solid black;">Nom et prénom</td>
+                                    <td width="35%" style="border: 1px solid black;">Qualification</td>
+                                    <td width="10%" style="border: 1px solid black;">Catégorie</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.permit_no"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.department_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.name"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.job_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;"></td>
+                                </tr>
+
+
+                            </table>
+                        </center>
+                        <!--                        </br>-->
+                        <center>
+                            <table width="100%" style="border: 1px solid black;height:2px;text-align: center;v">
+                                <td width="20%" style="border: 1px solid black;">Date d'embauche</td>
+                                <td width="15%" style="border: 1px solid black;">N°C.N.S.S.</td>
+                                <td width="15%" style="border: 1px solid black;">N°C.I.M.R.</td>
+                                <td width="15%" style="border: 1px solid black;">Date naissance</td>
+                                <td width="5%" style="border: 1px solid black;">SF</td>
+                                <td width="5%" style="border: 1px solid black;">Enf</td>
+                                <td width="5%" style="border: 1px solid black;">Déd</td>
+                                <td width="15%" style="border: 1px solid black;">Paiement</td>
+                                <tr>
+                                    <td style="border: 1px solid black;">
+                                        <t t-esc="o.contract_id.date_start"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.matricule_cnss"/>
+                                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                        <t t-esc="foo"/>
+                                    </td>
+                                    <td style="border: 1px solid black;"></td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.birthday"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.marital"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.employee_id.children"/>
+                                    </td>
+                                    <td style="border: 1px solid black;"></td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="o.payment_mode"/>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </center>
+                        <!--                        </div>-->
+                        <!--                        </center>-->
+                        <!--########################################## table des données ###########################################################-->
+                        <div>
+                            <center>
+                                <table class="table" style="border: 1px solid black;text-align: center;">
+                                    <tr style="border:10px;text-align: center;">
+
+                                        <th rowspan="2" style="border: 1px solid black;">Code</th>
+                                        <th rowspan="2" style="border: 1px solid black;">Libellé de la Rubrique</th>
+                                        <th colspan="4" style="text-align: center;border: 1px solid black;">salariale
+                                        </th>
+                                        <th colspan="2" style="border: 1px solid black;">Charges Patronale</th>
+                                    </tr>
+                                    <tr style="border:10px;text-align: center;">
+                                        <th scope="col" style="border: 1px solid black;">nombre/base</th>
+                                        <th scope="col" style="border: 1px solid black;">Taux</th>
+                                        <th scope="col" style="border: 1px solid black;">Gains</th>
+                                        <th scope="col" style="border: 1px solid black;">Retenues</th>
+
+                                        <th scope="col" style="border: 1px solid black;">Taux</th>
+                                        <th scope="col" style="border: 1px solid black;">Montant</th>
+                                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                        <t t-esc="foo"/>
+                                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                        <t t-esc="foo"/>
+
+                                    </tr>
+
+                                    <tbody style="text-align:center">
+
+                                        <!--                                <p t-foreach="o.line_ids" t-as="line" >-->
+
+                                        <tr style="border-top:hidden"
+                                            t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)"
+                                            t-as="line">
+                                            <td style="text-align: center; border-top:5px solid #fff; padding: 0px 0px 0px 0px;border: 1px solid black;"
+                                                class="col-xs-1">
+
+                                            </td>
+                                            <td style="text-align: center; border-top:5px solid #fff; padding: 0px 0px 0px 0px;text-align: left;border: 1px solid black;"
+                                                class="col-xs-1">
+                                                <span>
+                                                    <span t-if="line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.total!=0  and line.code!='C_IMPAN' and line.code!='C_IMPDED' and line.code!='NET' and line.code!='C_IMP'">
+                                                        <center>
+                                                            <t t-esc="line.name"/>
+                                                        </center>
+                                                    </span>
+                                                </span>
+
+                                            </td>
+                                            <td style="text-align:center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;border: 1px solid black;"
+                                                class="col-xs-1">
+                                                <span t-if="line.code!='NET' and line.category_id.code!='C_IMP' and line.category_id.code!='PRIME' and line.category_id.code!='IRPP' and line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.code!='C_IMPAN' and line.code!='C_IMPDED' and line.total!=0">
+                                                    <center>
+                                                        <span t-field="line.amount"/>
+                                                    </center>
+                                                </span>
+
+                                            </td>
+                                            <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;border: 1px solid black;"
+                                                class="col-xs-1">
+
+                                                <span t-if="line.category_id.code!='COMP' and line.code!='NET' and line.code!='C_IMP' and line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.total!=0  and line.code!='C_IMPAN' and line.code!='C_IMPDED'">
+                                                    <center>
+                                                        <span t-esc="abs(line.rate)"
+                                                              t-options='{"widget": "float", "precision": 2}'/>
+                                                    </center>
+                                                </span>
+                                            </td>
+                                            <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;border: 1px solid black;"
+                                                class="col-xs-1">
+                                                <!--                                            <span t-if="line.category_id.code=='PRIME' or line.category_id.code=='BASE' or line.category_id.code=='feuille'">-->
+                                                <span t-if="(line.category_id.code=='PRIME' or line.code=='BASE' or line.category_id.code=='feuille') and( line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.code!=line.get_valeur()['conge_non_paye'] and line.code!='Absence' and line.total!=0)">
+                                                    <center>
+                                                        <span t-esc="abs(line.total)"/>
+                                                    </center>
+                                                </span>
+                                            </td>
+                                            <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;border: 1px solid black;"
+                                                class="col-xs-1">
+                                                <span t-if="(line.category_id.code=='SALC' or line.category_id.code=='IRPP' or line.code==line.get_valeur()['absence'] or  line.code==line.get_valeur()['conge_non_paye']) and line.total!=0">
+                                                    <center>
+                                                        <span t-esc="abs(line.total)"/>
+                                                    </center>
+                                                </span>
+                                            </td>
+                                            <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;border: 1px solid black;"
+                                                class="col-xs-1">
+                                                <span t-if="line.category_id.code=='COMP'">
+                                                    <center>
+                                                        <span t-field="line.rate"
+                                                              t-options='{"widget": "float", "precision": 2}'/>
+                                                    </center>
+                                                </span>
+
+                                            </td>
+
+                                            <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;border: 1px solid black;"
+                                                class="col-xs-1">
+                                                <span t-if="line.category_id.code=='COMP'">
+                                                    <center>
+                                                        <span t-field="line.total"/>
+                                                    </center>
+
+                                                </span>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+
+                                <TABLE width="100%" style="border: 1px solid black;height:2px;margin-top:-19px">
+
+                                    <tr style="border: 1px solid black;">
+                                        <TD width="70%" style="border: 1px solid black;">TOTAL
+                                        </TD>
+                                        <TD width="15%" style="border: 1px solid black;text-align:center">
+                                            <t t-set="test_variable" t-value="0"/>
+                                            <span t-foreach="o.line_ids" t-as="line">
+                                                <span t-if="line.category_id.code=='PRIME' or  line.code=='BASE' or line.code==line.get_valeur()['jour_ferie'] or line.code==line.get_valeur()['supp25'] or line.code==line.get_valeur()['supp50'] or line.code==line.get_valeur()['supp100']">
+                                                    <center>
+                                                        <t t-set="test_variable" t-value="test_variable+line.total"/>
+                                                    </center>
+
+
+                                                </span>
+                                            </span>
+                                            <t t-esc="test_variable" t-options='{"widget": "float", "precision": 2}'/>
+
+                                        </TD>
+                                        <TD width="15%" style="border: 1px solid black;text-align:center">
+                                            <t t-set="test_variable" t-value="0"/>
+                                            <span t-foreach="o.line_ids" t-as="line">
+                                                <span t-if="line.category_id.code=='SALC' or line.category_id.code=='IRPP' or line.code=='Absence'">
+                                                    <center>
+                                                        <t t-set="test_variable"
+                                                           t-value="test_variable+ abs(line.total)"/>
+                                                    </center>
+
+                                                </span>
+                                            </span>
+                                            <t t-esc="test_variable" t-options='{"widget": "float", "precision": 2}'/>
+
+
+                                        </TD>
+
+
+                                    </tr>
+                                </TABLE>
+                            </center>
+                        </div>
+                        <TABLE class="table" width="100%" style="border: 1px solid black;height:2px;">
+
+                            <th style="border: 1px solid black !important;">J.trva</th>
+                            <th style="border: 1px solid black !important;">Cumul B.Imp</th>
+                            <th style="border: 1px solid black !important;">Cumul I.G.R</th>
+                            <th style="border: 1px solid black !important;">Cum C.N.S.S</th>
+                            <th style="border: 1px solid black !important;">Cum C.I.M.R</th>
+                            <th style="border: 1px solid black !important;">Hr.Sal.</th>
+                            <th style="border: 1px solid black !important;">Net à Payer</th>
+                            <tr>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD width="18%" style="border: 1px solid black !important;">
+                                    <span t-foreach="o.line_ids" t-as="line">
+                                        <span t-if="line.category_id.code=='NET'">
+
+                                            <span t-esc="line.total"
+                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+
+                                        </span>
+                                    </span>
+                                </TD>
+
+
+                            </tr>
+                        </TABLE>
+                        <TABLE class="table" width="100%" style="border: 1px solid black;height:2px;margin-top:-10px">
+
+                            <th style="border: 1px solid black !important;" rowspan="2">Décompte monétaire</th>
+                            <th style="border: 1px solid black !important;">200</th>
+                            <th style="border: 1px solid black !important;">100</th>
+                            <th style="border: 1px solid black !important;">50</th>
+                            <th style="border: 1px solid black !important;">20</th>
+                            <th style="border: 1px solid black !important;">10</th>
+                            <th style="border: 1px solid black !important;">5</th>
+                            <th style="border: 1px solid black !important;">1</th>
+                            <th style="border: 1px solid black !important;">0.50</th>
+                            <th style="border: 1px solid black !important;">0.20</th>
+                            <th style="border: 1px solid black !important;">0.10</th>
+                            <th style="border: 1px solid black !important;">0.05</th>
+                            <th style="border: 1px solid black !important;" rowspan="2">Signature</th>
+                            <tr>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;"></TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+                                <TD style="border: 1px solid black !important;">
+
+                                </TD>
+
+
+                            </tr>
+                        </TABLE>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
+

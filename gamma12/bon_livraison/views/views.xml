@@ -1,0 +1,55 @@
+<odoo>
+      <data>
+                    <!--modification qweb Bon livraison'remplacer nom d'article par description'-><!-->
+
+        <template id="report_inherit_bl" inherit_id="stock.report_delivery_document">
+
+             <xpath expr="//table[@class='table table-sm mt48']/thead/tr/th[1]" position="replace">
+                <th>
+                                Désignations
+                </th>
+            </xpath>
+             <xpath expr="//table[@class='table table-sm mt48']/tbody/tr/td[1]" position="replace">
+                <td>
+                    <span t-field="move.name"/>
+                </td>
+            </xpath>
+
+
+
+            <xpath expr="//table[@class='table table-sm mt48'][2]/thead/tr/th[1]" position="replace">
+                <th>
+                                Désignations
+                </th>
+            </xpath>
+
+             <xpath expr="//table[@class='table table-sm mt48'][2]/tbody/tr/td[1]" position="replace">
+
+             <td>
+                <span t-field="move_line.move_id.name"/>
+             </td>
+
+
+
+
+            </xpath>
+        </template>
+
+
+          <!--make description visible-><!-->
+          <record id="inherit_bn_liv" model="ir.ui.view">
+            <field name="name">stock</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='name']" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <attribute name="string">Désignations</attribute>
+                <attribute name="required">0</attribute>
+                </xpath>
+            </field>
+          </record>
+
+
+    </data>
+</odoo>

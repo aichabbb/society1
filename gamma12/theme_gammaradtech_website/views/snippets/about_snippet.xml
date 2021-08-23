@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="snippet_about" name="GRT About">
+
+        <!-- Start about Area -->
+        <section class="oe_snippet_body about-area pt-100 pb-100 scroll-animations ">
+            <div class="container">
+                <div class="row py-5">
+                    <div class="col-lg-6">
+
+                        <div class="row">
+
+                            <div class="col-12">
+                                <div class="story-content goRight hide">
+                                    <h2>Brief Information
+                                        <br />
+                                        About
+                                        <span>gammaradtech</span>
+                                    </h2>
+                                    <p class="mt-30">La qualité et l’ergonomie de nos Services et Produits assurent une
+                                        protection maximale tout en offrant les plus hauts niveaux de confort et de
+                                        flexibilité. Nous avons compris la nécessité de fournir à la fois protection et
+                                        confort pour l'utilisateur. Si vous désirez plus d’informations, vous pouvez
+                                        contacter notre service d'assistance, pour répondre à toutes vos questions.
+                                    </p>
+                                    <a href="#" class="genric-btn primary-border circle arrow">Voir Plus
+                                        <span class="lnr lnr-arrow-right"></span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <img class="d-flex img-fluid mx-auto" src="/theme_gammaradtech_website/static/images/about.png" alt="" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End About Area -->
+
+
+    </template>
+
+</odoo>

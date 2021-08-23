@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Customize header  -->
+    <template id="custom_header" inherit_id="website.layout" name="Custom Header">
+
+        <!-- Assign an id  -->
+        <xpath expr="//div[@id='wrapwrap']/header" position="attributes">
+            <attribute name="id">default-header</attribute>
+        </xpath>
+
+        <!-- Add an element before the top menu  -->
+        <xpath expr="//div[@id='wrapwrap']/header/nav" position="before">
+            <div class="banner-contact">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 contact-links">
+                            <div class="flex-column flex-lg-row d-flex align-items-left">
+                                <a href="#">
+                                    <i class="fa fa-map-marker"></i>
+                                    AMAL 5, N°839 HAY AL MASSIRA - CYM 10150 RABAT
+                                </a>
+                                <a href="mailto:contact@gammaradtech.com">
+                                    <i class="fa fa-envelope-o"></i>
+                                    contact@gammaradtech.com
+                                </a>
+                                <a href="tel:+2120537207370">
+                                    <i class="fa fa-mobile"></i>
+                                    +212 (0) 537 207 370
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="banner-social d-flex justify-content-end align-items-center">
+                                <a href="#">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-dribbble"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-behance"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

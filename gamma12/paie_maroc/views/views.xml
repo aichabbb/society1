@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <!--  Contract-->
+        <report
+                id="hr_payroll.action_report_payslip"
+                model="hr_payroll.report_payslip"
+                string="Payslip"
+                report_type="qweb-pdf"
+                name="hr_payroll.report_payslip"
+                file="hr_payroll.report_payslip"
+                print_report_name="'Payslip - %s' % (object.employee_id.name)"
+                menu="False"
+        />
+        <!--  configuration categorie -->
+        <record id="configuration_id_tree" model="ir.ui.view">
+            <field name="name">Categories</field>
+            <field name="model">configuration.configuration</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="categorie"/>
+                    <field name="taux"/>
+                </tree>
+            </field>
+        </record>
+        <record id="configuration_id_form" model="ir.ui.view">
+            <field name="name">configuration</field>
+            <field name="model">configuration.configuration</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="categorie"/>
+                                <field name="taux"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="configuration_id_action" model="ir.actions.act_window">
+            <field name="name">categorie</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">configuration.configuration</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="categorie_id_menu" name="Categories" parent="hr_timesheet.hr_timesheet_menu_configuration"
+                  action="configuration_id_action" sequence=""/>
+        <record id="tree_inht_timesheet" model="ir.ui.view">
+            <field name="name">account.analytic.line</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="categorie_trv"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="form_timesheet_id_inhrt" model="ir.ui.view">
+            <field name="name">account_analytic_line</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="brouillon,confirmer"/>
+                        <button name="confirmer" string="confirmer" type="object"
+                                attrs="{'invisible': [('state', '=', 'confirmer')]}"/>
+                    </header>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="before">
+                    <field name="categorie_trv"/>
+                </xpath>
+            </field>
+        </record>
+        <!--     <record id="hr_contract_view_form_l10n_ma_payroll" model="ir.ui.view">-->
+        <!--            <field name="name">hr.contract.view.form.l10n.ma_payroll</field>-->
+        <!--            <field name="model">hr.contract</field>-->
+        <!--            <field name="priority">20</field>-->
+        <!--            <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>-->
+        <!--			<field name="arch" type="xml">-->
+
+        <!--			<data>-->
+        <!--                 <xpath expr="//notebook" position="inside">-->
+
+        <!--            <page string="Primes et autres Avantages" name="information">-->
+
+        <!--                    <group name="primes" string="Primes">-->
+        <!--					</group>-->
+
+        <!--			<group col="2" colspan="2" name="left_column">-->
+        <!--                    <separator colspan="2" string="Type de Paie"/>-->
+        <!--			        <field name="schedule_pay"/>-->
+        <!--				    </group>-->
+
+        <!--             </page>-->
+        <!--             </xpath>-->
+        <!--             </data>-->
+        <!--            </field>-->
+        <!--        </record>-->
+        <record id="hr_payslip_rule_inhetr" model="ir.ui.view">
+            <field name="name">hr.salary.rule_payroll</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="hr_payslip_category_inhetr" model="ir.ui.view">
+            <field name="name">hr.salary.rule.category_payroll</field>
+            <field name="model">hr.salary.rule.category</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_category_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="hr_payslip_form_l10n_ma_payroll" model="ir.ui.view">
+            <field name="name">hr.payslip.form.l10n.ma_payroll</field>
+            <field name="model">hr.payslip</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <!--                 <xpath expr="//form" position="inside">-->
+                    <!--                  <button  string="execte" name="compute_heure_supp_dict" type="object"/>-->
+                    <!--                 </xpath>-->
+                    <xpath expr="//field[@name='paid']" position="after">
+                        <field name="payment_mode"/>
+                    </xpath>
+                    <xpath expr="//sheet" position="before">
+                        <!--<button name="action_print_fiche" string="imprime" type="object"/>-->
+                    </xpath>
+                    <xpath expr="//field[@name='credit_note']" position="before">
+                        <field name="date_today"/>
+                    </xpath>
+                    <xpath expr="//field[@name='credit_note']" position="before">
+                        <field name="NET" invisible="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        <record id="res_company_form_l10n_ma_payroll" model="ir.ui.view">
+            <field name="name">res.company.form.l10n.ma_payroll</field>
+            <field name="model">res.company</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="inside">
+                        <page name="maroc_payroll" string="Donnees Maroc " invisible="1">
+                            <group>
+                                <field name="plafond_secu"/>
+                                <field name="nombre_employes"/>
+                                <newline/>
+                                <field name="org_ss"/>
+                                <newline/>
+                                <field name="conv_coll"/>
+                                <newline/>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        <record id="inherit_res_company_plafond_secu" model="ir.ui.view">
+            <field name="name"> Add_plafond_secu_info_juridique</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="info_societe.inherit_res_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='info_juridique']/group[1]/group[1]/field[@name='vat']" position="before">
+                    <field name="plafond_secu"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="hr_employee_form_paie" model="ir.ui.view">
+            <field name="name">hr.employee.form.l10n.ma_payroll</field>
+            <field name="model">hr.employee</field>
+            <field name="priority">30</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="inside">
+                        <page name="maroc_payroll" string="Paramètres de la paie">
+                            <group>
+                                <field name="date_from" invisible="1"/>
+                                <field name="date_to" invisible="1"/>
+                                <!--                                <group string="Numéros d'affiliation">-->
+                                <!--                                    &lt;!&ndash;<field name="matricule_cnss"/>&ndash;&gt;-->
+                                <!--                                    <field name="matricule_cimr"/>-->
+                                <!--                                    &lt;!&ndash;<field name="matricule_mut"/>&ndash;&gt;-->
+                                <!--                                </group>-->
+                                <!--					<group string="Absences">-->
+                                <!--					<field name="abs"/>-->
+                                <!--					</group>-->
+                                <!--					<group string=" Heures Sup(Version Pro seulement)">-->
+                                <!--			      	<field name="hsovr"/><field name="hs25"/>-->
+                                <!--				    <field name="hs50"/>-->
+                                <!--					<field name="hs100"/>-->
+                                <!--					</group>-->
+                                <group string="Remboursements">
+                                    <field name="av_sal"/>
+                                    <!--					<field name="rem_mut"/>-->
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Indemnité Non Imposable">
+                                    <label for="boolean_calcule_prime" style="width: max-content;"
+                                           string="Calculer les primes automatiquement"/>
+                                    <field name="boolean_calcule_prime" nolabel="1"/>
+                                    <field name="Frais_Trans"/>
+                                    <!--                        <field name="bool_representation" />-->
+                                    <field name="indimnite_de_represenation"
+                                           attrs="{'invisible':[('boolean_calcule_prime','==',True)]}"/>
+                                    <field name="indimnite_de_represenation_compute" force_save="True"
+                                           attrs="{'invisible':[('boolean_calcule_prime','!=',True)]}"/>
+                                    <field name="indimnite_de_panier"
+                                           attrs="{'invisible':[('boolean_calcule_prime','==',True)]}"/>
+                                    <field name="indmnite_panier_compute"
+                                           attrs="{'invisible':[('boolean_calcule_prime','!=',True)]}"
+                                           force_save="True"/>
+                                    <field name="frais_deplacement"/>
+                                    <field name="indimnite_de_vestimentaire"/>
+                                    <field name="indimnite_de_lait"/>
+                                </group>
+                                <group string="Indemnité Imposable">
+                                    <label for="prime_rendement" style="width: max-content;"
+                                           string="Primes de rendements"/>
+
+                                    <field name="prime_rendement" nolabel="1"/>
+                                    <field name="prime_anciente"
+                                           attrs="{'invisible':[('boolean_calcule_prime','==',True)]}"/>
+                                    <field name="prime_anciente_compute" force_save="True"
+                                           attrs="{'invisible':[('boolean_calcule_prime','!=',True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>

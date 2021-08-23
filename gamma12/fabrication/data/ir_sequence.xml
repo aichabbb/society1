@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for sale.order -->
+        <record id="seq_production_gamma" model="ir.sequence">
+            <field name="name">Production</field>
+            <field name="code">fabrication.it</field>
+            <field name="prefix">PR</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for order.fabrication -->
+        <record id="seq_order_fabrication_gamma" model="ir.sequence">
+            <field name="name">order.fabrication</field>
+            <field name="code">order.fabrication</field>
+            <field name="prefix">OF</field>
+            <field name="number_next" eval="1"/>
+            <field name="number_increment" eval="1"/>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

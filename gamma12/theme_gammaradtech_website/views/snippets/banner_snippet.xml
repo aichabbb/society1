@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="snippet_banner" name="GRT Banner">
+
+        <!-- Start Banner Area -->
+        <section class="oe_snippet_body banner-area relative">
+            <div class="fullscreen relative" style="background-image: url('/theme_gammaradtech_website/static/images/banner-bg.jpg');">
+
+                <div class="story-content header-story-content">
+                    <h6 class="text-uppercase">nous vous offrons</h6>
+                    <h1 class="animated bounceInDown">Des
+                        <span class="sp-1">Solutions</span>
+                        <br />
+                        Globales Avec
+                        <span class="sp-2">GAMMA RAD TECH</span>
+                    </h1>
+                    <a href="#" class="animated bounce genric-btn primary circle arrow">Get Started
+                        <span class="lnr lnr-arrow-right"></span>
+                    </a>
+                </div>
+
+                <div class="banner-cards">
+                    <div class="container">
+                        <div class="row no-gutter">
+                            <div class="col-md-4 p-0">
+                                <div class="banner-card card-a">
+
+                                    <div>
+                                        <span class="lnr lnr-apartment lnr-card"></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-uppercase">GAMMA RAD TECH</h6>
+                                    </div>
+                                    <div>
+                                        <p>Met à votre disposition son expérience approfondie des technologies et
+                                            contrôle de qualité en Radiologie, Radiothérapie et orthopédie afin de
+                                            répondre au mieux à vos besoins.
+                                        </p>
+                                        <a href="#" class="card-btn mt-3 genric-btn primary-border circle arrow">View
+                                            More
+                                            <span class="lnr lnr-arrow-right"></span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4 p-0">
+                                <div class="banner-card card-b">
+
+                                    <div>
+                                        <span class="lnr lnr-envelope lnr-card"></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-uppercase">Toujours Joignable Par Mail</h6>
+                                    </div>
+                                    <div>
+                                        <p>Pour tout information ou conseille ou information n'hésitez pas a nous
+                                            contacter par mail
+                                        </p>
+                                        <a href="#" class="card-btn mt-3 genric-btn primary-border circle arrow">View
+                                            More
+                                            <span class="lnr lnr-arrow-right"></span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4 px-0">
+                                <div class="banner-card card-c">
+
+                                    <div>
+                                        <span class="lnr lnr-clock lnr-card"></span>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-uppercase">OPENING HOURS</h6>
+                                    </div>
+                                    <div>
+                                        <p>Monday – Friday</p>
+                                        <p>Saturtay – Sunday</p>
+                                        <a href="#" class="card-btn mt-3 genric-btn primary-border circle arrow">View
+                                            More
+                                            <span class="lnr lnr-arrow-right"></span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+    </template>
+
+
+</odoo>

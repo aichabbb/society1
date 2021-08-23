@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_layout_gamma" model="report.layout">
+            <field name="view_id" ref="en-tete_gamma.external_layout_gamma"/>
+            <field name="image">/en-tete_gamma/static/image/logo_GAMMA.png</field>
+            <field name="pdf">/web/static/pdf/preview_standard.pdf</field>
+        </record>
+    </data>
+</odoo>

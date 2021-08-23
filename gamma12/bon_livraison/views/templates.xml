@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+         <template id="report_inherit_bl11" inherit_id="stock.report_picking">
+
+            <xpath expr="//table[@class='table table-sm'][2]/thead/tr/th[1]" position="replace">
+                <th>
+                    Désignations
+                </th>
+            </xpath>
+
+            <xpath expr="//table[@class='table table-sm'][2]/tbody/t/t/tr/td[1]" position="replace">
+                <td>
+                    <span t-field="move.name"/>
+                </td>
+            </xpath>
+        </template>
+    </data>
+</odoo>

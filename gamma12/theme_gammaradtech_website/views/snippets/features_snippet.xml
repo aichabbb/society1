@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="snippet_features" name="GRT Features">
+
+        <!-- Start Feature Area -->
+        <section class="oe_snippet_body feature-area pt-100 pb-5 scroll-animations relative"
+                 style="background-image: url('/theme_gammaradtech_website/static/images/banner-bg.jpg');">
+            <div class="overlay overlay-bg"></div>
+            <div class="container">
+
+                <div class="row justify-content-center text-center">
+                    <div class="single-contact col-lg-6 col-md-8">
+                        <h2 class="text-white">Nos
+                            <span>Produits</span>
+                        </h2>
+                        <p class="text-white">
+                            Most people who work in an office environment, buy computer products.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row no-gutter features-cards">
+
+                    <div class="col-md-4 p-0">
+                        <a href="#" title="" class="features-card card-a goDown hide">
+                            <div>
+                                <i class="fa fa-wrench icon-card"></i>
+                            </div>
+                            <h6>Solution Sur Mesure</h6>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, orci sed
+                                egestas faucibus, leo sapien laoreet massa, feugiat
+                            </p>
+                        </a>
+                    </div>
+                    <div class="col-md-4 p-0">
+                        <a href="#" title="" class="features-card card-b goDown hide">
+                            <div>
+                                <i class="fa fa-stethoscope icon-card"></i>
+                            </div>
+                            <h6>Radiotherapie</h6>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, orci sed
+                                egestas faucibus, leo sapien laoreet massa, feugiat
+                            </p>
+                        </a>
+                    </div>
+                    <div class="col-md-4 p-0">
+                        <a href="#" title="" class="features-card card-c goDown hide">
+                            <div>
+                                <i class="fa fa-shield icon-card"></i>
+                            </div>
+                            <h6>Radioprotection</h6>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend, orci sed
+                                egestas faucibus, leo sapien laoreet massa, feugiat
+                            </p>
+                        </a>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+        <!-- Start Feature Area -->
+
+    </template>
+
+</odoo>

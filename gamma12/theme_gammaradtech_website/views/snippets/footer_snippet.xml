@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="snippet_footer" name="GRT Footer">
+
+        <!-- Strat Footer Area -->
+        <section class="oe_snippet_body">
+            <footer class="section-gap">
+                <div class="container">
+                    <div class="row pt-60">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h6 class="text-uppercase mb-20">Top Product</h6>
+                                <ul class="footer-nav">
+                                    <li>
+                                        <a href="#">Managed Website</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Manage Reputation</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Power Tools</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Marketing Service</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h6 class="text-uppercase mb-20">Navigation</h6>
+                                <ul class="footer-nav">
+                                    <li>
+                                        <a href="#">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Main Features</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Offered Services</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Latest Portfolio</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h6 class="text-uppercase mb-20">Compare</h6>
+                                <ul class="footer-nav">
+                                    <li>
+                                        <a href="#">Works &amp; Builders</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Works &amp; Wordpress</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Works &amp; Templates</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h6 class="text-uppercase mb-20">Quick About</h6>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consecteturadipisicin gelit, sed do eiusmod tempor
+                                    incididunt.
+                                </p>
+                                <p>
+                                    +212 (0) 537 207 370
+                                    <br/>
+                                    <a href="#">support@gammaradtech.com</a>
+                                </p>
+                                <div class="footer-social d-flex align-items-center">
+                                    <a href="#">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fa fa-dribbble"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fa fa-behance"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
+                        <p class="footer-text m-0">Copyright &#169; 2019
+                            All rights reserved | This template is made by
+                            <a href="https://itadvisor.ma" target="_blank">itadvisor</a>
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </section>
+        <!-- End Footer Area -->
+
+    </template>
+
+</odoo>

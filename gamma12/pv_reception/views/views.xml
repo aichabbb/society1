@@ -1,0 +1,154 @@
+<odoo>
+    <data>
+        <record id="pv_reception_tree" model="ir.ui.view">
+            <field name="name">pv reception</field>
+            <field name="model">pv.reception</field>
+            <field name="arch" type="xml">
+                <tree string="" create="false">
+                    <field name="num_pv"/>
+                    <field name="num_commande"/>
+                    <field name="nclient"/>
+                    <field name="adress_pv"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pv_reception_form" model="ir.ui.view">
+            <field name="name">pv reception</field>
+            <field name="model">pv.reception</field>
+            <field name="arch" type="xml">
+                <form string="" create="0" edit="">
+                    <sheet>
+                        <div>
+                            <group>
+                                <field name="num_pv"/>
+                                <field name="num_commande"/>
+                                <field name="nclient" invisible="1"/>
+                                <field name="nclient2" options="{'no_create': True}"/>
+                                <field name="adress_pv"/>
+                                <field name="ligne_commande">
+                                    <tree string="" >
+                                        <field name="des"/>
+                                        <field name="qte"/>
+                                        <field name="lot_ids"/>
+                                    </tree>
+                                </field>
+                                <field name="client_m2m" invisible="1"/>
+                            </group>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button class="oe_highlight" name="valider" string="valider" type="object"
+                                attrs="{'invisible':[('state','=','confirmer')]}"/>
+                        <button string="Annuler" class="btn-secondary" special="cancel"
+                                attrs="{'invisible':[('state','=','confirmer')]}"/>
+                        <field name="state" invisible="1"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <record id="pv_reception_action" model="ir.actions.act_window">
+            <field name="name">pv reception</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pv.reception</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+            </field>
+        </record>
+
+        <record id="pv_reception_tree_line" model="ir.ui.view">
+            <field name="name">pv reception</field>
+            <field name="model">pv.line</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="des"/>
+                    <field name="qte"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pv_reception_form_line" model="ir.ui.view">
+            <field name="name">pv reception</field>
+            <field name="model">pv.line</field>
+            <field name="arch" type="xml">
+                <form string="" create="0">
+                    <sheet>
+                        <div>
+                            <group>
+                                <field name="des"/>
+                                <field name="qte"/>
+                            </group>
+
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <record id="pv_reception_action_line" model="ir.actions.act_window">
+            <field name="name">pv receptionn line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pv.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+            </field>
+        </record>
+        <!--l'ajout d'une smart botton pv dans la formulaire bon commande><!-->
+        <record id="inherit_bn_commande" model="ir.ui.view">
+            <field name="name">sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_invoice']" position="before">
+                    <button name="liste_pv" type="object" string="PV DE RECEPTION"
+                            class="oe_stat_button " icon="fa-file-text "
+                            attrs="{'invisible':['|',('state','!=','sale'),('is_pv','=',False)]}">
+                    </button>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="is_pv" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//form/header" position="inside">
+                    <button name="pv_button" type="object" string="PV DE RECEPTION"
+                            attrs="{'invisible':['|',('state','!=','sale'),('bool_pv','=',False)]}"/>
+                    <field name="bool_pv" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="after">
+                    <field name="qte_pv_fait" readonly="True"
+                           attrs="{'column_invisible': [('parent.state','!=','sale')]}"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Inherit Form View to Modify it -->
+        <record id="inherit_res_partner_for_address" model="ir.ui.view">
+            <field name="name">address_client</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[hasclass('o_address_format')]" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <field name="address_client" invisible=""/>
+                </xpath>
+                <!--<xpath expr="//field[@name='vat']" position="after">
+<field name="address_client"/>
+    </xpath>-->
+
+            </field>
+        </record>
+    </data>
+</odoo>

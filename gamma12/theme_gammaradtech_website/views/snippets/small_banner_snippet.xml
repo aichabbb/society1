@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="snippet_small_banner" name="GRT Small Banner">
+
+        <!-- Start Banner Area -->
+        <section class="generic-banner relative" style="background-image: url('theme_gammaradtech_website/static/images/banner-bg.jpg');">
+            <div class="overlay overlay-bg"></div>
+            <div class="container">
+                <div class="row height align-items-center justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="banner-content text-center">
+                            <h2>The Generic Page</h2>
+                            <p>It won’t be a bigger problem to find one video game lover in your
+                                <br />
+                                neighbor. Since the introduction of Virtual Game.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+    </template>
+</odoo>

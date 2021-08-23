@@ -1,0 +1,70 @@
+$border_header_color: #D86613;
+.o_gamma_header {
+    border: 2px solid $border_header_color;
+    padding: 0;
+    border-radius: 0px 31.173px;
+    border-collapse: collapse;
+    height: 110px;
+    font-size: 12px;
+    margin: 0 87px;
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        height: 107px;
+        tr {
+            min-height: 100%;
+            td {
+                text-align: center !important;
+                padding: 7px;
+                min-height: 100%;
+                &:last-child {
+                    width: 33%;
+                    font-size: 12px;
+                    display: block;
+                    min-height: 100%;
+                    .offset-1 {
+                        float: right;
+                        // margin-right: -100px;
+                        // margin-left: 100px;
+                        margin: 20px -100px -20px 100px;
+                    }
+                }
+                &:nth-child(2) {
+                    border-right: 2px solid $border_header_color;
+                    border-left: 2px solid $border_header_color;
+                    height: 100%;
+                    width: 34%;
+                    img {
+                        max-width: 70px;
+                        margin: -8px 0 8px;
+                    }
+                    .logo_iso {
+                        margin-right: 20px;
+                        // margin: 10px 0;
+                    }
+                    .logo_urs {
+                        margin-left: 20px;
+                        // margin: 10px 0;
+                    }
+                }
+                &:first-child {
+                    width: 33%;
+                    float: center;
+                    img {
+                        max-width: 180px;
+                        margin: -8px 0 8px;
+                    }
+                }
+                // .offset-1 {
+                //     float: right;
+                // }
+            }
+        }
+    }
+}
+.o_gamma_footer {
+    font-size: 11px;
+    text-align: center;
+    border-top: 2px solid $border_header_color;
+    margin-top: 0 !important;
+}

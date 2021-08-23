@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_demande_achat_user,demande.achat,model_demande_achat,purchase.group_purchase_user,1,1,1,0
+access_demande_achat_manager,demande.achat,model_demande_achat,purchase.group_purchase_manager,1,1,1,1
+
+access_demande_achat_line_user,demande.achat.line,model_demande_achat_line,purchase.group_purchase_user,1,1,1,0
+access_demande_achat_line_manager,demande.achat.line,model_demande_achat_line,purchase.group_purchase_manager,1,1,1,1
+
+access_motif_refus_wizard_user,motif.refus,model_motifs_refus_wizard,purchase.group_purchase_user,1,1,1,1
+access_motif_refus_wizard_manager,motif.refus,model_motifs_refus_wizard,purchase.group_purchase_manager,1,1,1,1
+
+access_motif_refus_user,motif.refus,model_motifs_refus,purchase.group_purchase_user,1,1,1,1
+access_motif_refus_manager,motif.refus,model_motifs_refus,purchase.group_purchase_manager,1,1,1,1
+

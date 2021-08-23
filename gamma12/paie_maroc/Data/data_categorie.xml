@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+        <record id="Presence" model="configuration.configuration">
+            <field name="categorie">Présence</field>
+            <field name="taux">1</field>
+        </record>
+        <record id="absence" model="configuration.configuration">
+            <field name="categorie">Absence</field>
+            <field name="taux">-1</field>
+        </record>
+        <record id="conep" model="configuration.configuration">
+            <field name="categorie">Congé payé</field>
+            <field name="taux">0</field>
+        </record>
+        <record id="congenp" model="configuration.configuration">
+
+            <field name="categorie">Congé Non payé</field>
+            <field name="taux">-1</field>
+        </record>
+        <record id="jourferie" model="configuration.configuration">
+            <field name="categorie">Jour férié</field>
+            <field name="taux">2</field>
+        </record>
+        <record id="supp25" model="configuration.configuration">
+            <field name="categorie">heure supplémentaire 25%</field>
+            <field name="taux">1.25</field>
+        </record>
+        <record id="supp50" model="configuration.configuration">
+            <field name="categorie">heure supplémentaire 50%</field>
+            <field name="taux">1.50</field>
+        </record>
+        <record id="supp100" model="configuration.configuration">
+            <field name="categorie">heure supplémentaire 100%</field>
+            <field name="taux">2</field>
+        </record>
+
+
+    </data>
+</odoo>

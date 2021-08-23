@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="papier" model="report.paperformat">
+            <field name="name">Bon commande gamma</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">20</field>
+        </record>
+    </data>
+</odoo>

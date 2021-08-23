@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="snippet_clients" name="GRT Clients">
+        <!-- Start Clients Area -->
+        <section class="oe_snippet_body client-area scroll-animations ">
+
+            <div class="container">
+                <div class="row">
+                    <div class="owl-carousel-clients">
+                        <div>
+                            <a href="#">
+                                <img src="https://via.placeholder.com/150"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="https://via.placeholder.com/150"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="https://via.placeholder.com/150"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="https://via.placeholder.com/150"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="https://via.placeholder.com/150"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="https://via.placeholder.com/150"/>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="https://via.placeholder.com/150"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- End Clients Area -->
+
+    </template>
+
+</odoo>

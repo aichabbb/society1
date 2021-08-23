@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="snippet_clients_opt" name="Snippet Clients Options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@data-js='layout_column']" position="after">
+            <div data-selector=".client-area" data-js="snippet_clients_options"> <!-- Options group -->
+                <li class="dropdown-submenu">
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-wrench"></i>
+                        Manage
+                    </a>
+                    <div class="dropdown-menu"> <!-- Options list -->
+
+                        <div class="input-group p-2">
+                            <div class="clients-snippet-options">
+                                <div class="dropdown-header o_main_header">Add Client</div>
+                                <div class="input-group mb-3">
+
+                                    <div class="snippet-clients-control">
+                                        <button name="add">Add</button>
+                                    </div>
+
+                                </div>
+
+                                <div class="dropdown-header o_main_header">Remove Client</div>
+                                <div class="snippet-clients-control">
+                                    <ul class="snippet-clients-list">
+                                        <li class="relative">
+                                            <a href="#"><i class="fa fa-times"></i></a>
+                                             http://www.gogole.com
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

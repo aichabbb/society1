@@ -1,0 +1,23 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+access_fabrication_prepdechets_user,fabrication.prepdechets user,model_prepdechets,fabrication.group_fabrication_user,1,1,1,1
+access_fabrication_prepdechets_manager,fabrication.prepdechets manager,model_prepdechets,fabrication.group_fabrication_manager,1,1,1,1
+
+
+access_fabrication_manufacture_user,fabrication.manufacture user,model_manufacture,fabrication.group_fabrication_user,1,0,0,0
+access_fabrication_manufacture_manager,fabrication.manufacture manager,model_manufacture,fabrication.group_fabrication_manager,1,1,1,1
+access_fabrication_launchmanufacturing,fabrication.launchmanufacturing user,model_launchmanufacturing,,1,0,0,0
+access_fabrication_launchmanufacturing_user,fabrication.launchmanufacturing user,model_launchmanufacturing,fabrication.group_fabrication_user,1,1,1,1
+access_fabrication_launchmanufacturing_manager,fabrication.launchmanufacturing manager,model_launchmanufacturing,fabrication.group_fabrication_manager,1,1,1,1
+
+access_fabrication_stock_quant_user,fabrication.stock_quant user,stock.model_stock_quant,,1,1,1,1
+access_fabrication_stock_quant_manager,fabrication.stock_quant manager,stock.model_stock_quant,fabrication.group_fabrication_manager,1,1,1,1
+access_fabrication_product_product_user,fabrication.product_product user,product.model_product_product,,1,1,1,1
+access_fabrication_product_product_manager,fabrication.product_product manager,product.model_product_product,fabrication.group_fabrication_manager,1,1,1,1
+access_fabrication_product_template_user,fabrication.product_template user,product.model_product_template,,1,0,0,0
+access_fabrication_product_template_manager,fabrication.product_template manager,product.model_product_template,fabrication.group_fabrication_manager,1,1,1,1
+
+
+access_order_fabrication,order.fabrication,fabrication.model_order_fabrication,,1,1,1,1
+access_product_list,product.list,fabrication.model_product_list,,1,1,1,1

@@ -1,0 +1,13 @@
+<odoo>
+
+     <record id="view_location_fabrication_it_custom" model="ir.ui.view">
+                <field name="name">location.fabrication.custom.form.inherited</field>
+                <field name="model">stock.location</field>
+                <field name="inherit_id" ref="stock.view_location_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='return_location']" position="after">
+                                    <field name='is_location_of_fabrication_it' invisible="1"/>
+                    </xpath>
+                </field>
+            </record>
+</odoo>

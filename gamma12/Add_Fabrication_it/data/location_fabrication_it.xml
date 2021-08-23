@@ -1,0 +1,18 @@
+<odoo>
+        <data noupdate="0">
+
+        <record id="Fabrication_location" model="stock.location">
+            <field name="name">Fabrication_IT Locations</field>
+            <field name="usage">view</field>
+            <field name="posz">1</field>
+        </record>
+
+<record id="location_production" model="stock.location">
+            <field name="name">Zone de colisage</field>
+            <field name="location_id" ref="Fabrication_location"/>
+            <field name="usage">production</field>
+            <field name="is_location_of_fabrication_it">True</field>
+        </record>
+    </data>
+
+    </odoo>

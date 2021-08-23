@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_picking_form_fabrication" model="ir.actions.act_window">
+        <field name="name">Ordre du fabrication</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">order.fabrication</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'search_default_picking_type_id': [active_id],
+                               'default_picking_type_id': active_id,
+                               'contact_display': 'partner_address', }</field>
+    </record>
+
+     <record id="view_production_filter" model="ir.ui.view">
+            <field name="name">production.select</field>
+            <field name="model">launchmanufacturing</field>
+            <field name="arch" type="xml">
+                <search string="Search Production">
+                    <field name="name" string="Production" filter_domain="[('name','ilike',self)]"/><!--,('origin','ilike',self)-->
+                    <filter string="À faire" name="todo" domain="[('state','in',('confirmé', 'enCours'))]"
+                        help="Manufacturing Orders which are in confirmed state."/>
+                    <separator/>
+                    <filter string="Confirmé" name="confirmed" domain="[('state','=','confirmé')]"/>
+                    <filter string="Planifié" name="planned" domain="[('state','in',('brouillon', 'confirmé'))]"/>
+                    <filter string="En cours" name="inprogress" domain="[('state','=','enCours')]"
+                        help="Manufacturing Orders which are currently in production."/>
+                    <filter string="Fait" name="done" domain="[('state', '=', 'fait')]"/>
+                    <separator/>
+                    <filter string="En retard" domain="['&amp;', ('date', '&lt;', current_date), ('state', '=', 'confirmé')]"
+                        name="late" help="Production started late"/>
+                    <filter string="Fait dans les 365 derniers jours" name="last_year_mo_order"
+                        domain="[('date', '&gt;', (context_today() - relativedelta(days=365)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="Mes activités" name="activities_my" domain="[('activity_ids.user_id', '=', uid)]"/>
+                    <separator/>
+                    <separator/>
+               </search>
+            </field>
+        </record>
+
+        <record id="fabrication_production_action_picking_deshboard" model="ir.actions.act_window">
+            <field name="name">Production</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">launchmanufacturing</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="view_production_filter"/>
+            <field name="domain">[('picking_type_id', '=', active_id)]</field>
+            <field name="context">{'default_picking_type_id': active_id}</field>
+        </record>
+
+    <record id="stock_production_type_kanban-fab" model="ir.ui.view">
+        <field name="name">stock.picking.type.fabrication.kanban</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="count_of_todo"/>
+                <field name="count_of_waiting"/>
+                <field name="count_of_late"/>
+            </field>
+
+            <xpath expr='//div[@name="stock_picking"]' position="after">
+                <div t-if="record.code.raw_value == 'ia_fabrication'" t-attf-class="#{kanban_color(record.color.raw_value)}" groups="fabrication.group_fabrication_user">
+                    <div>
+                        <div t-attf-class="o_kanban_card_header">
+                            <div class="o_kanban_card_header_title">
+                                <div class="o_primary">
+                                    <a type="object" name="get_fabrication_stock_picking_action_picking_type" class="o_primary">
+                                        <field name="name"/>
+                                    </a>
+                                </div>
+                                <div class="o_secondary"><field class="o_secondary" name="warehouse_id" readonly="1"/></div>
+                            </div>
+                            <div class="o_kanban_manage_button_section">
+                                <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
+                            </div>
+                        </div>
+                        <div class="container o_kanban_card_content">
+                            <div class="row">
+                                <div class="col-6 o_kanban_primary_left">
+                                    <button class="btn btn-primary" name="%(fabrication_production_action_picking_deshboard)d" type="action" context="{'search_default_todo': 1}">
+                                        <span t-if="record.code.raw_value =='ia_fabrication'"><t t-esc="record.count_of_todo.value"/> A traiter</span>
+                                    </button>
+                                </div>
+                                <div class="col-6 o_kanban_primary_right">
+                                    <div t-if="record.count_of_waiting.raw_value > 0" class="row">
+                                        <div class="col-9">
+                                            <a name="%(fabrication_production_action_picking_deshboard)d" type="action" context="{'search_default_confirmed': 1}">
+                                                En attente
+                                            </a>
+                                        </div>
+                                        <div class="col-3">
+                                            <field name="count_of_waiting"/>
+                                        </div>
+                                    </div>
+                                    <div t-if="record.count_of_late.raw_value > 0" class="row">
+                                        <div class="col-9">
+                                            <a class="oe_kanban_stock_picking_type_list" name="%(fabrication_production_action_picking_deshboard)d" type="action" context="{'search_default_late': 1}">
+                                                En retard
+                                            </a>
+                                        </div>
+                                        <div class="col-3">
+                                            <field name="count_of_late"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                            <div class="row">
+                                <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view" name="picking_left_manage_pane">
+                                    <div role="menuitem" class="o_kanban_card_manage_title">
+                                        <span>Vue</span>
+                                    </div>
+                                    <div role="menuitem">
+                                        <a name="get_fabrication_stock_picking_action_picking_type" type="object">Tous</a>
+                                    </div>
+                                    <div role="menuitem">
+                                        <a name="%(fabrication_production_action_picking_deshboard)d" type="action" context="{'search_default_inprogress': 1}">En cours</a>
+                                    </div>
+                                    <div role="menuitem">
+                                        <a name="%(fabrication_production_action_picking_deshboard)d" type="action" context="{'search_default_planned': 1}">Planifié</a>
+                                    </div>
+                                </div>
+                                <div class="col-6 o_kanban_card_manage_section o_kanban_manage_new" groups="fabrication.group_fabrication_manager">
+                                    <div role="menuitem" class="o_kanban_card_manage_title">
+                                        <span>Nouvelle</span>
+                                    </div>
+                                    <div role="menuitem">
+                                        <a name="%(action_picking_form_fabrication)d" type="action">Ordre de fabrication</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                <div role="menuitem" aria-haspopup="true" class="col-8">
+                                    <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                                <div role="menuitem" class="col-4 text-right">
+                                    <a type="edit">Configuration</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <!--<record id="view_picking_type_form_inherit_mrp" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="show_operations" position="attributes">
+                <attribute name="attrs">{"invisible": [("code", "=", "mrp_operation")]}</attribute>
+            </field>
+            <field name="show_reserved" position="attributes">
+                <attribute name="attrs">{"invisible": [("code", "=", "mrp_operation")]}</attribute>
+            </field>
+        </field>
+    </record>-->
+</odoo>

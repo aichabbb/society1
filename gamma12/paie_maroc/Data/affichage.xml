@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+            id="report_paie_maroc19"
+            string="Feuille de paie "
+            model="hr.payslip"
+            report_type="qweb-pdf"
+            name="paie_maroc.fiche_de_paie"
+            file="paie_maroc.fiche_de_paie"
+            print_report_name="'bulletin de paie N° %s' % (object.number)"
+    />
+    <template id="fiche_de_paie">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+                <t t-foreach="docs" t-as="o">
+                    <div class="page"  style="font-size:15px; !important;">
+                        <p class="text-right">BULLETIN DE PAIE N°:
+                            <span t-field="o.number"/>
+                        </p>
+
+                        <table  style="border-spacing:0;margin-bottom:0;height:60px;border: 2px solid black;padding:0;font-size:15px;"
+                            class="table table-bordered table-hover">
+                            <tr>
+                                <td>
+                                    <strong>Employeur:</strong>
+                                    <span t-field="o.company_id.name"/>
+                                    <br/>
+                                    <strong>Departement:</strong>
+                                    <span t-field="o.employee_id.department_id"/>
+                                    <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                    <t t-esc="foo"/>
+                                    <br/>
+
+                                </td>
+                                <td>
+                                    <strong>Emploi:</strong>
+                                    c
+
+                                    <strong>N°CNSS:</strong>
+                                    <span t-field="o.employee_id.matricule_cnss"/>
+                                    <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                    <t t-esc="foo"/>
+                                    <strong>N°CIN:</strong>
+                                    <span t-field="o.employee_id.CIN"/>
+
+                                    <br/>
+                                    <strong>droit légal année encours:</strong>
+
+                                    <span t-field="o.employee_id.leaves_count"/>
+                                    <strong>ID salarié:</strong>
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </td>
+                                <td>
+                                    <strong>Nom:</strong>
+                                    <span t-field="o.employee_id.name"/>
+                                    <br/>
+                                    <strong>Adresse:</strong>
+                                    <span t-field="o.employee_id.address_home_id.street"/>
+                                    <span t-field="o.employee_id.address_home_id.street2"/>
+                                    <span t-field="o.employee_id.address_home_id.city"/>
+                                    <span t-field="o.employee_id.address_home_id.state_id"/>
+                                    <span t-field="o.employee_id.address_home_id.zip"/>
+                                    <span t-field="o.employee_id.address_home_id.country_id"/>
+                                    <br/>
+                                    <strong>Sit familiale:</strong>
+                                    <span t-field="o.employee_id.marital"/>
+                                    <br/>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <strong>Période du:</strong>
+                        <span t-field="o.date_from"/>
+                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/>
+                        <strong>au:</strong>
+                        <span t-field="o.date_to"/>
+                        <br/>
+                        <strong>Paiement:</strong>
+                        <span t-field="o.payment_mode"/>
+                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/>
+                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/>
+                        <strong>Le:</strong>
+                        <span t-field="o.date_today"/>
+
+                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/>
+                        <strong>Banque:</strong>
+
+                        <span t-field="o.employee_id.bank_account_id.bank_id"/>
+                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/>
+                        <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/>
+
+                        <strong>RIB:</strong>
+                        <span t-field="o.employee_id.bank_account_id"/>
+
+
+                        <table style="border-spacing:0;margin-bottom:0;height: 110px;border: 2px solid black;"
+                            class="table table-bordered table-hover">
+                            <tr>
+
+                                <th rowspan="2">Code</th>
+                                <th rowspan="2">Libellé de la Rubrique</th>
+                                <th colspan="4" style="text-align: center;">salariale</th>
+                                <th colspan="2">Charges Patronale</th>
+                            </tr>
+                            <tr style="border:10px">
+                                <th scope="col">nombre/base</th>
+                                <th scope="col">Taux</th>
+                                <th scope="col">Gains</th>
+                                <th scope="col">Retenues</th>
+
+                                <th scope="col">Taux</th>
+                                <th scope="col">Montant</th>
+                                <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                <t t-esc="foo"/>
+                                <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                                <t t-esc="foo"/>
+
+                            </tr>
+
+                            <tbody>
+
+<!--                                <p t-foreach="o.line_ids" t-as="line" >-->
+
+                                    <tr style="border-top:hidden"  t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line" >
+                                        <td style="text-align: center; border-top:5px solid #fff; padding: 0px 0px 0px 0px;"
+                                            class="col-xs-1">
+<!--                                              <span t-if="line.code==line.get_valeur()['base']">  <t t-esc="line.name"/></span>-->
+<!--                                              <span t-if="line.code==line.get_valeur()['brut']">  <t t-esc="line.name"/></span>-->
+<!--                                              <span t-if="line.code==line.get_valeur()['cumul_imposable']">  <t t-esc="line.name"/></span>-->
+
+
+                                        </td>
+                                        <td style="text-align: center; border-top:5px solid #fff; padding: 0px 0px 0px 0px;text-align: left;"
+                                            class="col-xs-1">
+                                            <span>
+                                              <span t-if="line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.total!=0  and line.code!='C_IMPAN' and line.code!='C_IMPDED' and line.code!='NET' and line.code!='C_IMP'">  <t t-esc="line.name"/></span>
+                                            </span>
+
+                                        </td>
+                                        <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;"
+                                            class="col-xs-1">
+                                            <span t-if="line.code!='NET' and line.category_id.code!='C_IMP' and line.category_id.code!='PRIME' and line.category_id.code!='IRPP' and line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.code!='C_IMPAN' and line.code!='C_IMPDED' and line.total!=0">
+                                                <span t-field="line.amount"/>
+                                            </span>
+
+                                        </td>
+                                        <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;"
+                                            class="col-xs-1">
+
+                                            <span t-if="line.category_id.code!='COMP' and line.code!='NET' and line.code!='C_IMP' and line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.total!=0  and line.code!='C_IMPAN' and line.code!='C_IMPDED'">
+                                                <span t-esc="abs(line.rate)"
+                                                      t-options='{"widget": "float", "precision": 2}'/>
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;"
+                                            class="col-xs-1">
+<!--                                            <span t-if="line.category_id.code=='PRIME' or line.category_id.code=='BASE' or line.category_id.code=='feuille'">-->
+                                            <span t-if="(line.category_id.code=='PRIME' or line.code=='BASE' or line.category_id.code=='feuille') and( line.code!='BASE HR' and line.code!=line.get_valeur()['presence'] and line.code!=line.get_valeur()['conge_non_paye'] and line.code!='Absence' and line.total!=0)">
+                                                <span t-esc="abs(line.total)"/>
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;"
+                                            class="col-xs-1">
+                                            <span t-if="(line.category_id.code=='SALC' or line.category_id.code=='IRPP' or line.code==line.get_valeur()['absence'] or  line.code==line.get_valeur()['conge_non_paye']) and line.total!=0">
+                                                <span t-esc="abs(line.total)"/>
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;"
+                                            class="col-xs-1">
+                                            <span t-if="line.category_id.code=='COMP'">
+                                                <span t-field="line.rate"
+                                                      t-options='{"widget": "float", "precision": 2}'/>
+                                            </span>
+
+                                        </td>
+
+                                        <td style="text-align: center; border-top: 0px solid #fff; padding: 0px 0px 0px 0px; text-align: right;"
+                                            class="col-xs-1">
+                                            <span t-if="line.category_id.code=='COMP'">
+                                                <span t-field="line.total"/>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+<!--                                </p>-->
+                            </tbody>
+                        </table>
+<!--                         <table class="table" colspan="2" style="width:50%" align="right">-->
+
+<!--                                                            <t t-set="qty" t-value="0">-->
+<!--    <thead>-->
+<!--                                <span t-foreach="o.line_ids" t-as="line">-->
+<!--                                <tr>-->
+
+
+<!--                                    <tr>-->
+<!--                                        <span t-if="line.code!='BASE HR' or line.category_id.code=='PRIME' or line.code=='BASE' or line.category_id.code=='feuille'">-->
+
+<!--                                        <t t-set="tot" t-value="tot + line.total"/>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--            </tr>-->
+<!--                                </tr>-->
+<!--</span>-->
+
+<!--                            </thead>-->
+<!--                                                            </t>-->
+<!--                        </table>-->
+
+
+                         <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/><t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/> <span class="text-right" style="font-weight: bold;">TOTAL DE GAINS:
+                            <t t-set="test_variable" t-value="0"/>
+                            <span t-foreach="o.line_ids" t-as="line">
+                                            <span t-if="line.category_id.code=='PRIME' or  line.code=='BASE' or line.code==line.get_valeur()['jour_ferie'] or line.code==line.get_valeur()['supp25'] or line.code==line.get_valeur()['supp50'] or line.code==line.get_valeur()['supp100']">
+
+                                                <t t-set="test_variable" t-value="test_variable+line.total"/>
+
+                              </span>
+                              </span>
+                            <t t-esc="test_variable" t-options='{"widget": "float", "precision": 2}'/>
+
+                        </span>
+
+   <t t-set="foo" t-value=" '     '.replace(' ',u'\xa0').encode('utf-8') "/>
+                        <t t-esc="foo"/> <span class="text-right" style="font-weight: bold;">TOTAL DE RETUNUES:
+                            <t t-set="test_variable" t-value="0"/>
+                            <span t-foreach="o.line_ids" t-as="line">
+                                            <span t-if="line.category_id.code=='SALC' or line.category_id.code=='IRPP' or line.code=='Absence'">
+                                                      <t t-set="test_variable" t-value="test_variable+ abs(line.total)"/>
+                            </span>
+                        </span>
+                                                                              <t t-esc="test_variable" t-options='{"widget": "float", "precision": 2}'/>
+
+                        </span>
+                        <br/>
+                        <h3>
+                         <p class="text-right" style="font-weight: bold;">NET A PAYER:<span t-foreach="o.line_ids" t-as="line"><span t-if="line.category_id.code=='NET'">
+
+                                  <span t-esc="line.total" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+
+                         </span>
+                        </span>
+                        </p>
+                        </h3>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>
+

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report id="production_pdf"
+            string="ordre de production"
+            model="launchmanufacturing"
+            report_type="qweb-pdf"
+            name="fabrication.print_order_production"
+            file="fabrication.print_order_production"
+            print_report_name="'Order de productionn N° %s' % (object.name)"/>
+
+    <template id="print_order_production">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <t t-foreach="o" t-as="order">
+                            <table class="table table-bordered"
+                                   style="margin-left:20%; margin-right:20%; width:60%; border:2px black solid">
+                                <th style="text-align: center; color:red;">ORDRE DE PRODUCTION &#160;(<span t-field="order.name"/>)</th>
+                            </table>
+                            Date de la Demande:
+                            <span t-esc="datetime.datetime.strptime(str(order.order_fabrication_id.date_demande), '%Y-%m-%d %H:%M:%S').strftime('%d/%m/%Y')"/>
+                            <br/>
+                            <br/>
+                            <div style="display:inline-block; width:45%">
+                            Nom du demandeur:<span t-field="order.responsable"/><!--order.order_fabrication_id.demandeur-->
+                            </div>
+                            <div style="display:inline-block; color:red; width:45%">
+                                Bon de commande (<span t-field="order.order_fabrication_id.sale_order_id"/>)
+                            </div><!--order.devis.id-->
+                            <br/>
+                            <br/>
+                            Nom du client:
+                            <span t-field="order.client.name"/><!--order.client_id.name-->
+                            <br/>
+                            <br/>
+                            Date fin prévu:
+                            <span t-esc="datetime.datetime.strptime(str(order.order_fabrication_id.date_fin_prevu), '%Y-%m-%d %H:%M:%S').strftime('%d/%m/%Y')"/>
+                            <br/>
+                            <br/>
+                            <table class="table table-bordered">
+                                <thead style="background-color: #A6ACAF;">
+                                    <tr>
+                                        <th scope="col" width="40%">INPUT</th>
+                                        <th scope="col" groups="stock.group_production_lot">
+                                            <strong>LOT N*</strong>
+                                        </th>
+                                        <th scope="col">Destination</th>
+                                        <th scope="col">Quantité</th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="order.move_fabrication_ids" t-as="move_line">
+                                    <t t-set="has_serial_number" t-value="move_line.move_line_ids.mapped('lot_id')"/>
+                                    <tbody>
+                                        <tr t-foreach="move_line.move_line_ids" t-as="articles">
+                                            <t t-if="articles">
+                                                <td width="40%">
+                                                    <span t-field="articles.product_id.name"/>
+                                                </td>
+                                                <td groups="stock.group_production_lot">
+                                                    <t t-if="has_serial_number">
+                                                        <span t-field="articles.lot_id.name"/>
+                                                    </t>
+                                                    <t t-else="">
+
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <!--<span t-field="articles.product_id.default_code"/>-->
+                                                </td>
+                                                <td>
+                                                    <span t-field="articles.qty_done"/>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                            </table>
+                            <table class="table table-bordered">
+                                <thead style="background-color: #A6ACAF;">
+                                    <tr>
+                                        <th scope="col" width="40%">OUTPUT</th>
+                                        <th scope="col" groups="stock.group_production_lot">
+                                            <strong>LOT N*</strong>
+                                        </th>
+                                        <th scope="col">Destination</th>
+                                        <th scope="col">Quantité</th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="order.move_fabrication_output_ids" t-as="move_line">
+                                    <t t-set="has_serial_number" t-value="move_line.move_line_ids.mapped('lot_name')"/>
+                                    <tbody>
+                                        <tr t-foreach="move_line.move_line_ids" t-as="articles">
+                                            <t t-if="articles">
+                                                <td>
+                                                    <span t-field="articles.product_id.name"/>
+                                                </td>
+                                                <td groups="stock.group_production_lot">
+                                                    <t t-if="has_serial_number">
+                                                        <span t-field="articles.lot_name"/>
+                                                    </t>
+                                                    <t t-else="">
+
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <!--<span t-field="articles.product_id.default_code"/>-->
+                                                </td>
+                                                <td>
+                                                    <span t-field="articles.qty_done"/>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                            </table>
+                            <table class="table table-bordered">
+                                <thead style="background-color: #A6ACAF;text-align:center;">
+                                    <tr>
+                                        <th scope="col">Motif de commande</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="height:150px;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered">
+                                <thead style="background-color: #A6ACAF;text-align:center;">
+                                    <th scope="col">Visa demandeur</th>
+                                    <th scope="col">Production</th>
+                                    <th scope="col">Controle qualité</th>
+                                    <th scope="col">Responsable</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="25%" rowspan="3"/>
+                                        <td width="25%" rowspan="3"/>
+                                        <td width="25%">Préalable</td>
+                                        <td width="25%" rowspan="3"/>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%">En cours</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%">Final</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

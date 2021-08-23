@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="'assets_backend" name="listeview_1" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <style>
+              .page{
+                border: 1px solid red !important;
+
+                }
+
+            </style>
+
+        </xpath>
+
+
+    </template>
+
+
+</odoo>

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="action_make_procurement">
+        <field name="name">Procurement Request</field>
+        <field name="res_model">purchase.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!--Fabrication form-->
+    <record id="manufacture_form" model="ir.ui.view">
+        <field name="name">manufacture.form</field>
+        <field name="model">manufacture</field>
+        <field name="arch" type="xml">
+            <form string="manufacture">
+                <group>
+                    <field name="product"/>
+                    <field name="articles_id"
+                           context="{'tree_view_ref':'fabrication.fabrication_operation_product_tree'}">
+                        <tree string="Article">
+                            <field name="default_code"/>
+                            <field name="name"/>
+                            <field name="type"/>
+                            <field name="qty_available"/>
+                            <field name="virtual_available"/>
+                            <field name="uom_id"/>
+                        </tree>
+                    </field>
+                </group>
+
+            </form>
+        </field>
+    </record>
+
+    <!--Fabrication Tree-->
+    <record id="manufacture_tree" model="ir.ui.view">
+        <field name="name">manufacture.tree</field>
+        <field name="model">manufacture</field>
+        <field name="arch" type="xml">
+            <tree string="manufacture">
+                <field name="product"/>
+                <field name="articles_id">
+                    <field name="product_qty" invisible="1"/>
+                    <field name="product_uom_id" invisible="1" options="{'no_open':True,'no_create':True}"/>
+                </field>
+            </tree>
+        </field>
+    </record>
+
+    <!--Launch Manufacturing -->
+    <record id="launchmanufacturing_form" model="ir.ui.view">
+        <field name="name">launchmanufacturing.form</field>
+        <field name="model">launchmanufacturing</field>
+        <field name="arch" type="xml">
+            <form string="Production">
+                <header>
+                    <button string="vérifier" type="object" name="checkQuantity"
+                            attrs="{'invisible':['|','|','|',('state','=','enCours'),('state','=','confirmé'),('state','=','fait')]}"/>
+                    <button name="validating" string="Produire" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state','!=','confirmé')]}" confirm="Êtes-vous sûr de vouloir valider les entrées?"/>
+                    <button string="Annuler la réservation" type="object" name="annuler_reservation"
+                            attrs="{'invisible':[('state','!=','confirmé')]}"/>
+                    <button string="Marquer comme fait" class="oe_highlight" type="object" name="mark_as_done"
+                            attrs="{'invisible':[('state','!=','enCours')]}"/>
+                    <button string="Annuler" type="object" name="cancel_production"
+                            attrs="{'invisible':[('state','!=','enCours')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="brouillon,confirmé,enCours,fait"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <div class="oe_title">
+                            <field name="name" readonly="1"/>
+                        </div>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="nomp" attrs="{'readonly':[('state','=','fait')]}"/>
+                            <field name="devis" readonly="1" attrs="{'invisible':[('devis', '=', False)]}"/>
+                            <field name="date" attrs="{'readonly':[('state','=','fait')]}"/>
+                            <field name="picking_type_id" force_save="1" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="product" attrs="{'readonly':[('state','=','fait')]}" required="1"/>
+                            <field name="client" attrs="{'readonly':[('state','=','fait')]}"/>
+                            <field name="responsable"/>
+                            <field name="names" readonly="1" attrs="{'invisible':[('state','!=','fait')]}"/>
+                            <field name="stock_intern_id" domain="[('usage','=','internal')]" required="1"
+                                   attrs="{'readonly':[('state','!=','brouillon')], 'invisible':[('is_multi_warehouse','=',False)]}"/>
+                            <field name="stock_externe_id" domain="[('usage','=','production')]" required="1"
+                                   attrs="{'readonly':[('state','!=','brouillon')]}" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="company_id" invisible="1"/>
+                    <field name="is_multi_warehouse" invisible="1"/>
+                    <field name="message" invisible="1"/>
+                    <div attrs="{'invisible':[('message','=',False)]}">
+                        <p style="color:red;">Les quanitités des produits suivants ont changées, veuillez remplire le
+                            stock ou bien réduire la quantité pour effectuer cette operation :
+                        </p>
+                        <field style="color:blue;" name="message_cnt" readonly="1"/>
+                    </div>
+
+                    <group>
+                        <field name="move_fabrication_ids" widget="one2many_list"
+                               attrs="{'readonly':[('state','in',['fait','enCours'])]}" nolabel="0">
+                            <tree string="moves" editable="bottom" create="false">
+                                <field name="name" invisible="1"/>
+                                <field name="product_id" invisible="1"/>
+                                <field name="product_fabrication_id" readonly="1"/>
+                                <field name="qty_available" string="Quantité en stock"/>
+                                <field name="location_id" required="0" invisible="1"/>
+                                <field name="location_dest_id" required="0" invisible="1"/>
+                                <field name="date" invisible="1"/>
+                                <field name="date_expected" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="product_uom" invisible="1"/>
+                                <field name="product_uom_qty" string="Qauntité par article"/>
+                                <field name="reserved_availability" invisible="1"/>
+                                <field name="quantity_done" readonly="1" invisible="0"/>
+                                <field name="state" invisible="1"/>
+                                <field name="uom" required="0" readonly="1"/>
+                                <button name="show_details_fabrication_IT" string="Register lots, packs, location"
+                                        type="object"
+                                        icon="fa-list" options='{"warn": true}' context="{'type': 'in'}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="move_fabrication_output_ids" widget="one2many_list"
+                               attrs="{'readonly':[('state','=','fait')]}" nolabel="0">
+                            <tree string="outs" editable="bottom">
+                                <field name="name" invisible="1"/>
+                                <field name="output_id" invisible="1" force_save="1"/>
+                                <field name="product_id"/>
+                                <field name="qty_available" string="Quantité en stock" invisible="1"/>
+                                <field name="location_id" required="0" invisible="1"/>
+                                <field name="location_dest_id" required="0" invisible="1"/>
+                                <field name="date" invisible="1"/>
+                                <field name="date_expected" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="product_uom" invisible="1"/>
+                                <field name="product_uom_qty" string="Quantité"/>
+                                <field name="reserved_availability" invisible="1"/>
+                                <field name="quantity_done" readonly="1" invisible="0"/>
+                                <field name="state" invisible="1"/>
+                                <field name="uom" required="0"/>
+                                <button name="show_details_fabrication_IT" string="Register lots, packs, location"
+                                        type="object"
+                                        icon="fa-list" options='{"warn": true}' context="{'type': 'out'}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="move_fabrication_return_ids" widget="one2many_list"
+                               attrs="{'readonly':[('state','=','fait')]}" nolabel="0">
+                            <tree string="outs" create="1" editable="bottom">
+                                <field name="name" invisible="1"/>
+                                <field name="ret_id" invisible="0"/>
+                                <field name="product_id"/>
+                                <field name="qty_available" string="Quantité en stock" invisible="1"/>
+                                <field name="location_id" required="0" invisible="1"/>
+                                <field name="location_dest_id" required="0" invisible="1"/>
+                                <field name="date" invisible="1"/>
+                                <field name="date_expected" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="product_uom" invisible="1"/>
+                                <field name="product_uom_qty" string="Quantité"/>
+                                <field name="reserved_availability" invisible="1"/>
+                                <field name="quantity_done" readonly="1" invisible="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="uom" required="0"/>
+                                <button name="show_details_fabrication_IT" string="Register lots, packs, location"
+                                        type="object"
+                                        icon="fa-list" options='{"warn": true}' context="{'type': 'in'}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="dechet_ids" widget="one2many_list" attrs="{'readonly':[('state','=','fait')]}"
+                               nolabel="0">
+                            <tree string="Dechets" editable="bottom">
+                                <field name="name" domain="['|',('type', '=', 'product'),('type', '=', 'consu')]"
+                                       required="1"/>
+                                <field name="pourcentage"/>
+                                <field name="product_nomenclature" invisible="1"/>
+                                <field name="nomps" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="launchmanufacturing_tree" model="ir.ui.view">
+        <field name="name">launchmanufacturing.tree</field>
+        <field name="model">launchmanufacturing</field>
+        <field name="arch" type="xml">
+            <tree string="launchmanufacturing">
+                <field name="name"/>
+                <field name="nomp"/>
+                <field name="product"/>
+                <field name="client"/>
+                <field name="devis"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="names"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Launch Manufacturing OF-->
+    <record id="launchmanufacturing_tree_OF" model="ir.ui.view">
+        <field name="name">launchmanufacturing.tree OF</field>
+        <field name="model">launchmanufacturing</field>
+        <field name="arch" type="xml">
+            <tree string="launchmanufacturing" create="0" delete="0">
+                <field name="name"/>
+                <field name="nomp"/>
+                <field name="product"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="names"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="launchmanufacturing_form_OF" model="ir.ui.view">
+        <field name="name">launchmanufacturing.form</field>
+        <field name="model">launchmanufacturing</field>
+        <field name="arch" type="xml">
+            <form string="Production" create="0" delete="0">
+                <header>
+                    <button string="vérifier" type="object" name="checkQuantity"
+                            attrs="{'invisible':['|','|','|',('state','=','enCours'),('state','=','confirmé'),('state','=','fait')]}"/>
+                    <button name="validating" string="Produire" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state','!=','confirmé')]}" confirm="Êtes-vous sûr de vouloir valider les entrées?"/>
+                    <button string="Annuler la réservation" type="object" name="annuler_reservation"
+                            attrs="{'invisible':[('state','!=','confirmé')]}"/>
+                    <button string="Marquer comme fait" class="oe_highlight" type="object" name="mark_as_done"
+                            attrs="{'invisible':[('state','!=','enCours')]}"/>
+                    <button string="Annuler" type="object" name="cancel_production"
+                            attrs="{'invisible':[('state','!=','enCours')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="brouillon,confirmé,enCours,fait"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <div class="oe_title">
+                            <field name="name" readonly="1"/>
+                        </div>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="nomp" attrs="{'readonly':[('state','=','fait')]}"/>
+                            <field name="devis" readonly="1" attrs="{'invisible':[('devis', '=', False)]}"/>
+                            <field name="date" attrs="{'readonly':[('state','=','fait')]}"/>
+                        </group>
+                        <group>
+                            <field name="product" attrs="{'readonly':[('state','=','fait')]}" required="1"/>
+                            <field name="client" attrs="{'readonly':[('state','=','fait')]}"/>
+                            <field name="responsable"/>
+                            <field name="names" readonly="1" attrs="{'invisible':[('state','!=','fait')]}"/>
+                            <field name="stock_intern_id" domain="[('usage','=','internal')]" required="1"
+                                   attrs="{'readonly':[('state','!=','brouillon')], 'invisible':[('is_multi_warehouse','=',False)]}"/>
+                            <field name="stock_externe_id" domain="[('usage','=','production')]" required="1"
+                                   attrs="{'readonly':[('state','!=','brouillon')]}" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="company_id" invisible="1"/>
+                    <field name="is_multi_warehouse" invisible="1"/>
+                    <field name="message" invisible="1"/>
+                    <div attrs="{'invisible':[('message','=',False)]}">
+                        <p style="color:red;">Les quanitités des produits suivants ont changées, veuillez remplire le
+                            stock ou bien réduire la quantité pour effectuer cette operation :
+                        </p>
+                        <field style="color:blue;" name="message_cnt" readonly="1"/>
+                    </div>
+
+                    <group>
+                        <field name="move_fabrication_ids" widget="one2many_list"
+                               attrs="{'readonly':[('state','in',['confirmé','fait','enCours'])]}" nolabel="0">
+                            <tree string="moves" editable="bottom" create="false">
+                                <field name="name" invisible="1"/>
+                                <field name="product_id" invisible="1"/>
+                                <field name="product_fabrication_id" readonly="1"/>
+                                <field name="qty_available" string="Quantité en stock"/>
+                                <field name="location_id" required="0" invisible="1"/>
+                                <field name="location_dest_id" required="0" invisible="1"/>
+                                <field name="date" invisible="1"/>
+                                <field name="date_expected" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="product_uom" invisible="1"/>
+                                <field name="product_uom_qty" string="Qauntité par article"/>
+                                <field name="reserved_availability" invisible="1"/>
+                                <field name="quantity_done" readonly="1" invisible="0"/>
+                                <field name="state" invisible="1"/>
+                                <field name="uom" required="0" readonly="1"/>
+                                <button name="show_details_fabrication_IT" string="Register lots, packs, location"
+                                        type="object"
+                                        icon="fa-list" options='{"warn": true}' context="{'type': 'in'}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="move_fabrication_output_ids" widget="one2many_list"
+                               attrs="{'readonly':[('state','=','fait')]}" nolabel="0">
+                            <tree string="outs" editable="bottom">
+                                <field name="name" invisible="1"/>
+                                <field name="output_id" invisible="1" force_save="1"/>
+                                <field name="product_id"/>
+                                <field name="qty_available" string="Quantité en stock" invisible="1"/>
+                                <field name="location_id" required="0" invisible="1"/>
+                                <field name="location_dest_id" required="0" invisible="1"/>
+                                <field name="date" invisible="1"/>
+                                <field name="date_expected" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="product_uom" invisible="1"/>
+                                <field name="product_uom_qty" string="Quantité"/>
+                                <field name="reserved_availability" invisible="1"/>
+                                <field name="quantity_done" readonly="1" invisible="0"/>
+                                <field name="state" invisible="1"/>
+                                <field name="uom" required="0"/>
+                                <button name="show_details_fabrication_IT" string="Register lots, packs, location"
+                                        type="object"
+                                        icon="fa-list" options='{"warn": true}' context="{'type': 'out'}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="move_fabrication_return_ids" widget="one2many_list"
+                               attrs="{'readonly':[('state','=','fait')]}" nolabel="0">
+                            <tree string="outs" create="1" editable="bottom">
+                                <field name="name" invisible="1"/>
+                                <field name="ret_id" invisible="0"/>
+                                <field name="product_id"/>
+                                <field name="qty_available" string="Quantité en stock" invisible="1"/>
+                                <field name="location_id" required="0" invisible="1"/>
+                                <field name="location_dest_id" required="0" invisible="1"/>
+                                <field name="date" invisible="1"/>
+                                <field name="date_expected" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="product_uom" invisible="1"/>
+                                <field name="product_uom_qty" string="Quantité"/>
+                                <field name="reserved_availability" invisible="1"/>
+                                <field name="quantity_done" readonly="1" invisible="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="uom" required="0"/>
+                                <button name="show_details_fabrication_IT" string="Register lots, packs, location"
+                                        type="object"
+                                        icon="fa-list" options='{"warn": true}' context="{'type': 'in'}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="dechet_ids" widget="one2many_list" attrs="{'readonly':[('state','=','fait')]}"
+                               nolabel="0">
+                            <tree string="Dechets" editable="bottom">
+                                <field name="name" domain="['|',('type', '=', 'product'),('type', '=', 'consu')]"
+                                       required="1"/>
+                                <field name="pourcentage"/>
+                                <field name="product_nomenclature" invisible="1"/>
+                                <field name="nomps" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--Fabrication action-->
+    <record model="ir.actions.act_window" id="manufacture_action">
+        <field name="name">Opération</field>
+        <field name="res_model">manufacture</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--Launch Manufacturing action-->
+    <record model="ir.actions.act_window" id="launchmanufacturing_action">
+        <field name="name">Lancer la production</field>
+        <field name="res_model">launchmanufacturing</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--Fabrication and manufacturing Menu-->
+    <menuitem id="bd_menu" name="Production" groups="group_fabrication_user,group_fabrication_manager"
+              web_icon="fabrication,static/description/icon.png"/>
+    <menuitem id="bd_menu1" name="Fabrication" parent="bd_menu"
+              groups="group_fabrication_user,group_fabrication_manager"/>
+    <menuitem id="bd_menu2" name="Fabrication" parent="bd_menu1"
+              groups="group_fabrication_user,group_fabrication_manager"/>
+    <menuitem id="bd_menu3" name="Opération" parent="bd_menu2" action="manufacture_action"/>
+    <menuitem id="bd_menu4" name="Production" parent="bd_menu2" action="launchmanufacturing_action"/>
+    <menuitem id="bd_menu5" name="Données de base" parent="bd_menu"/>
+</odoo>

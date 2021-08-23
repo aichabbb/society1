@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="inherit_res_company_for" model="ir.ui.view">
+            <field name="name">res.company.inherit.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='patente_societe']" position="after">
+<!--                    <group>-->
+                        <field name="Capital" />
+                        <field name="Banque_populaire" />
+<!--                    </group>-->
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

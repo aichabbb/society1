@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <data>
+        <record id="inhirite_sheet_rapport" model="ir.ui.view">
+            <field name="name">frais</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="cin"/>
+                    <field name="Projet"/>
+                    <field name="tst_mantant" invisible="1"/>
+
+
+                    <!--                    <field name="Mission"/>-->
+
+
+                </xpath>
+                <xpath expr="//header" position="after">
+                    <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;"
+                         attrs="{'invisible': [('tst_mantant', '=', True)]}">
+                        le total des dépense est différent du total de la note <strong></strong>.
+                    </div>
+                </xpath>
+
+                <xpath expr="//field[@name='description']" position="before">
+
+                    <notebook>
+                        <page name="info" string="Tableau de dépense">
+                            <field name="depence" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="Désignation"/>
+                                    <field name="montant" widget='monetary'/>
+                                </tree>
+
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="Montant_total"/>
+                                    </div>
+                                    <field name="Montant_total" nolabel="1" class="oe_subtotal_footer_separator"
+                                           widget='monetary' force_save="1"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+
+                        </page>
+                        <page name="info" string="pièce jointe">
+                            <field name="piece" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="document"/>
+                                    <field name="numero"/>
+                                </tree>
+                            </field>
+
+
+                        </page>
+                        <page name="info" string="Autre information">
+                            <group>
+                                <group>
+
+
+                                    <field name="nombre_personnne"/>
+                                    <field name="moyen_trasport"/>
+                                </group>
+                            </group>
+
+
+                        </page>
+                    </notebook>
+
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_pvReception" model="report.paperformat">
+        <field name="name">Pv Reception Custom</field>
+        <field name="margin_bottom">34</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="margin_top">30</field>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="header_spacing">20</field>
+        <field name="default" eval="True"/>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="report_pv_id"
+            string="PV DE RECEPTION"
+            model="pv.reception"
+            report_type="qweb-pdf"
+            name="pv_reception.pv_rec"
+            file="pv_reception.pv_rec"
+            paperformat="pv_reception.paperformat_pvReception"
+            print_report_name="'PV DE RECEPTION'"/>
+
+    <template id="pv_reception.pv_rec">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="header" t-att-style="report_header_style">
+                    <div class="o_boxed_header">
+                        <table style="border-spacing:0;margin-bottom:0;height:60px;border: 2px solid black;padding:0;font-size:15px;"
+                               class="table table-bordered table-hover">
+                            <tr>
+                                <th style="width: 30%;">
+                                    <center>
+                                        <img src="/web/binary/company_logo" style="width:80%"/>
+                                    </center>
+                                </th>
+                                <th style="width: 40%;">
+                                    <H3>
+                                        <center>
+                                            <strong>
+                                                PV DE RECEPTION:
+                                                <h5>
+                                                    <span t-field="o.num_pv"/>
+                                                </h5>
+                                            </strong>
+                                        </center>
+                                    </H3>
+                                </th>
+                                <th  style="width: 30%;">
+                                    <B>Code</B>
+                                    : DOC-PVR
+                                    <br/>
+                                    <B>Version</B>
+                                    : 01
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size:15px; !important;">
+                        <div class="oe_structure"/>
+                        <br/>
+                        <br/>
+                        <strong>
+                            <B>Client :</B>
+                        </strong>
+                        <span t-field="o.nclient"/>
+                        <br/>
+                        <br/>
+                        <strong>
+                            <B>Lieu de livraison :</B>
+                        </strong>
+                        <span t-field="o.adress_pv"/>
+                        <!--<br/>
+                        <br/>
+                        <strong>
+                            <B>Lieu de livraison :</B>
+                        </strong>
+                        <span t-field="o.nclient.street"/>
+                        <span t-field="o.nclient.street2"/>
+                        <span t-field="o.nclient.city"/>
+                        <span t-field="o.nclient.state_id"/>
+                        <span t-field="o.nclient.zip"/>
+                        <span t-field="o.nclient.country_id"/>-->
+                        <br/>
+                        <br/>
+                        <strong>
+                            <B>Bon de commande N° :</B>
+                        </strong>
+                        <span t-field="o.num_commande"/>
+                        <br/>
+                        <table style="border-spacing:0;border: 2px solid black;padding:0;font-size:15px; "
+                               class="table table-bordered">
+                            <tr>
+                                <th>
+                                    <strong>Designation:</strong>
+                                </th>
+                                <th>
+                                    <strong>Lot/numéro de série</strong>
+                                </th>
+                                <th width="150px">
+                                    <strong>Quantité:</strong>
+                                </th>
+                            </tr>
+                            <span t-foreach="o.ligne_commande" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-esc="line.des"/>
+                                    </td>
+                                    <td>
+                                        <div t-if="line.lot_ids">
+                                            <span t-esc="line.lot_ids.name"/>
+                                        </div>
+                                        <div t-else="">
+                                            Sans
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.qte"/>
+                                    </td>
+                                </tr>
+                            </span>
+                        </table>
+                        <br/>
+                        <div class="footer">
+                            <div class="last-page text-center">
+                                <div id="footer_h" style="height:105px !important;">
+                                    <table style="border-spacing:0;border: 2px solid black;padding:0;font-size:15px;width:100%;"
+                                           class="table table-bordered">
+                                        <tr>
+                                            <th width="30%"/>
+                                            <th width="35%">
+                                                <strong>
+                                                    <span t-field="res_company.partner_id.name"/>
+                                                </strong>
+                                            </th>
+                                            <th width="35%">
+                                                <strong>
+                                                    <span t-field="o.nclient"/>
+                                                </strong>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th height="40px">
+                                                <strong>Signature et cachet:</strong>
+                                            </th>
+                                            <th/>
+                                            <th/>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="text-center">
+                                    <ul class="list-inline" style="margin-top: 10px;">
+                                        <li t-if="o.num_commande.company_id.phone" class="list-inline-item"><i
+                                                class="fa fa-phone" role="img" aria-label="Phone"
+                                                title="Phone"/> <span
+                                                t-field="o.num_commande.company_id.phone"/></li>
+                                        <li t-if="o.num_commande.company_id.email" class="list-inline-item"><i
+                                                class="fa fa-at" role="img" aria-label="Email" title="Email"/> <span
+                                                t-field="o.num_commande.company_id.email"/></li>
+                                        <li t-if="o.num_commande.company_id.website" class="list-inline-item"><i
+                                                class="fa fa-globe" role="img" aria-label="Website"
+                                                title="Website"/> <span
+                                                t-field="o.num_commande.company_id.website"/></li>
+                                        <li t-if="o.num_commande.company_id.vat" class="list-inline-item"><i
+                                                class="fa fa-building-o" role="img" aria-label="Fiscal number"/><t
+                                                t-esc="(o.num_commande.company_id.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+                                            : <span t-esc="o.num_commande.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/></li>
+                                    </ul>
+                                    <!--<span t-field="o.num_commande.company_id.report_footer"/>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

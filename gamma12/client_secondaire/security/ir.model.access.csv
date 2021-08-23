@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_client_secondaire_user,client.secondaire.user,model_client_secondaire,sales_team.group_sale_salesman,1,1,1,1
+access_client_secondaire_manager,client.secondaire.manager,model_client_secondaire,sales_team.group_sale_manager,1,1,1,1
+

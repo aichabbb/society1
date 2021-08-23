@@ -1,0 +1,15 @@
+<?xml version ='1.0' ?>
+
+<odoo>
+<data>
+   <report
+            string="Demande d'achat"
+            id="report_purchase_request"
+            model="demande.achat"
+            report_type="qweb-pdf"
+            name="demande_achat.report_purchasequotation"
+            file="demande_achat.report_purchasequotation"
+            print_report_name="'Demande achat - %s' % (object.name)"
+        />
+    </data>
+</odoo>

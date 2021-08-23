@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--dechets Tree-->
+    <record id="dechets_tree" model="ir.ui.view">
+        <field name="name">dechets.tree</field>
+        <field name="model">prepdechets</field>
+        <field name="arch" type="xml">
+            <tree string="Déchets" create="false">
+                <field name="name"/>
+                <field name="pourcentage"/>
+                <field name="product_nomenclature"/>
+                <field name="production_ref"/>
+                <field name="nomps"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Launch Manufacturing action-->
+    <record model="ir.actions.act_window" id="productproduct_action">
+        <field name="name">Produit</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <!--Dechets action-->
+    <record model="ir.actions.act_window" id="dechets_action">
+        <field name="name">Déchets</field>
+        <field name="res_model">prepdechets</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="devis_action_2">
+        <field name="name">Devis</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('production_ids', '!=', False)]</field>
+        <field name="context">{'is_accessed_from_production': True}</field>
+    </record>
+
+    <menuitem id="bd_menu9" name="Articles" action="productproduct_action" parent="bd_menu5"
+              groups="group_fabrication_user,group_fabrication_manager"/>
+    <menuitem id="bd_menu7" name="Déchets" action="dechets_action" parent="bd_menu5"/>
+    <menuitem id="menu_mrp_traceability" name="Numéros de lots/séries" parent="bd_menu5"
+              action="stock.action_production_lot_form" groups="stock.group_production_lot" sequence="15"/>
+    <menuitem action="stock.stock_move_action" id="stock_move_menu" name="Mouvements de stocks" string="Mouvements de stocks" parent="bd_menu5"
+              sequence="140" groups="base.group_no_one"/>
+</odoo>

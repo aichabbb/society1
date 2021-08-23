@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                id="repport"
+                model="hr.expense"
+                report_type="qweb-pdf"
+                string="ordre de mission "
+                name="gamma_template.gamma_mission_frais"
+                file="gamma_template.gamma_mission_frais"
+
+
+        />
+
+        <template id="gamma_mission_frais">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+
+
+                        <div class="container" style="font-size: 100%;">
+                            <br/>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-5">
+
+                                    <p>Date :
+                                        <span t-esc="o.date"/>
+                                    </p>
+
+                                    <p>Mission:
+                                        <span t-esc="o.name"/>
+                                    </p>
+                                    <p>Moyen de transport :
+                                        <span t-esc="o.moyen_trasport"/>
+                                    </p>
+                                    <p>Nom de Person :
+                                        <span t-esc="o.employee_id.name"/>
+                                    </p>
+                                    <p>Cin :
+                                        <span t-esc="o.cin"/>
+                                    </p>
+                                </div>
+
+
+                                <table class="table table-bordered " style="width: 60%;">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" class="text-center" style="color: rgb(0, 128, 0);">Tableau
+                                                de dépense
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                            <td class="w-75 p-3 text-center" style="color:hsl(16,100%,50%);">
+                                                Désignation
+                                            </td>
+                                            <td class="w-50 p-3 text-center" style="color:hsl(16,100%,50%);">Montant
+                                            </td>
+
+
+                                        </tr>
+                                        <span t-foreach="o.depence" t-as="line">
+                                            <tr>
+
+
+                                                <td>
+                                                    <span t-esc="line.Désignation"/>
+
+                                                </td>
+                                                <td>
+                                                    <span t-esc="line.montant"/>
+
+                                                </td>
+
+
+
+                                            </tr>
+
+                                        </span>
+                                           <tr>
+                                                  <td class="text-center"> Total en DH </td>
+                                                <td> <span t-esc="o.Montant_total"/></td>
+                                            </tr>
+
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                            <br/>
+
+
+
+                            <div class="row">
+                                <div class="col-5">
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <p>Nombre de PERSONNE :
+                                        <span t-esc="o.nombre_personnne"/>
+                                    </p>
+                                    <p>Projet SO N° :
+                                        <span t-esc="o.Projet.name"/>
+                                    </p>
+
+                                </div>
+
+                                <table class="table table-bordered" style="width: 40%;">
+                                    <thead>
+                                        <tr>
+                                            <td class="w-25 p-3">DOCUMENT</td>
+                                            <td class="w-25 p-3">N°</td>
+                                            <td class="w-25 p-3">ACCUSE</td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+<!--                                        <tr>-->
+<!--                                            <td>PV</td>-->
+<!--                                            <td>-->
+<!--                                                <span t-esc="o.pv"/>-->
+<!--                                            </td>-->
+<!--                                            <td></td>-->
+
+
+<!--                                        </tr>-->
+                                        <span t-foreach="o.piece" t-as="line">
+                                        <tr>
+                                            <td>  <span t-esc="line.document"/></td>
+                                            <td>
+                                                <span t-esc="line.numero"/>
+                                            </td>
+                                            <td> </td>
+
+                                        </tr>
+                                        </span>
+<!--                                        <tr>-->
+<!--                                            <td>BL</td>-->
+<!--                                            <td>-->
+<!--                                                <span t-esc="o.sale_order_id.name"/>-->
+<!--                                            </td>-->
+<!--                                            <td></td>-->
+
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td>CHEQUE</td>-->
+<!--                                            <td>-->
+<!--                                                <span t-esc="o.cheque"/>-->
+<!--                                            </td>-->
+<!--                                            <td></td>-->
+
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td>EFFET</td>-->
+<!--                                            <td>-->
+<!--                                                <span t-esc="o.effect"/>-->
+<!--                                            </td>-->
+<!--                                            <td></td>-->
+
+<!--                                        </tr>-->
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+                            <div>
+                                <div>
+                                    <br/>
+
+                                    <p class="text-center">LISTE DE CONTROL DE VEHICULE</p>
+
+                                </div>
+
+
+                            </div>
+                            <br/>
+
+                            <div>
+
+                                <table class="table table-bordered" style="font-size: 80%;">
+
+                                    <tr>
+                                        <td>HEURE DE DEPART</td>
+                                        <td>KILOMETRAGE</td>
+                                        <td>HEURE DE RETOUR</td>
+                                        <td>KILOMETRAGE</td>
+                                        <td>SIGNATURE</td>
+                                        <td>OBJET/JAWAZ</td>
+                                        <td>ETAT DE GASOIL</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="h-1000 d-inline-block"
+                                                  style="width: 120px; height:50px;"></span>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                </table>
+
+
+                            </div>
+                            <div class="text-right">
+                                <p style="text-decoration: underline;">Signature</p>
+
+
+                                <hr/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+
+            </t>
+        </template>
+
+        <!--        <record id="action_report_sheet" model="ir.actions.report">-->
+        <!--            <field name="name">extra</field>-->
+        <!--            <field name="model">hr.expense</field>-->
+        <!--            <field name="report_type">qweb-pdf</field>-->
+        <!--            <field name="report_name">gamma_template.report_order_mission</field>-->
+        <!--            <field name="report_file">gamma_template.report_order_mission</field>-->
+
+
+        <!--        </record>-->
+    </data>
+</odoo>

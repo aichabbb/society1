@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="snippet_work_left" name="GRT Work Left">
+
+        <!-- Start work Area -->
+        <section class="oe_snippet_body work-area work-left pt-0 pb-0 scroll-animations relative">
+            <div class="row no-gutter p-0 m-0">
+
+                <div class="col-md-6 work-info">
+
+                    <h2>Travaux d'aménagement</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <h3>Habillage des blocs opératoires</h3>
+                            <p class="mt-30">La qualité et l’ergonomie tout en offrant les plus hauts niveaux de confort
+                                et de flexibilité. Nous avons compris la nécessité de fournir à la fois protection et
+                                confort pour l'utilisateur.
+                            </p>
+                            <a href="#" class="genric-btn secondary-border circle arrow">Voir Plus
+                                <span class="lnr lnr-arrow-right"></span>
+                            </a>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <h3>Plombage des salles radio</h3>
+                            <p class="mt-30">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam consequat.
+                            </p>
+                            <a href="#" class="genric-btn secondary-border circle arrow">Voir Plus
+                                <span class="lnr lnr-arrow-right"></span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 p-0 m-0">
+                    <div class="work-img" style="background-image: url('/theme_gammaradtech_website/static/images/travaux.jpg');"></div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- End work Area -->
+
+    </template>
+
+</odoo>
